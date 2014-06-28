@@ -16,6 +16,18 @@ import com.lebcool.common.database.procedure.StoredProcedure;
 import com.lebcool.common.database.procedure.StoredProcedureArguments;
 import com.lebcool.common.logging.Logger;
 
+/**
+ * <p>
+ * The base repository class that all repositories should extends.  This
+ * provides the basic functionality to bridge POJO domain objects and the
+ * underlying database.
+ * </p>
+ *
+ * <p>
+ * This class provides a means to create a ORM-like framework free of the
+ * shackles provided by Hibernate and its JPA compliant competitiors.
+ * </p>
+ */
 public abstract class Repository
 {
     //:: ---------------------------------------------------------------------
@@ -55,14 +67,48 @@ public abstract class Repository
     //:: ---------------------------------------------------------------------
     //:: Protected Interface
 
+    /**
+     * A helper method used to convert the timestamp string returned by the
+     * database into its {@link LocalDateTime} object representation.
+     *
+     * @param s
+     *        The timestamp string to convert.  This cannot be null.
+     *
+     * @return A {@link LocalDataTime} representation of the supplied timestamp
+     *         string.
+     *
+     * @throws IllegalArgumentException
+     *         This exception is thrown if the string supplied is illegal and
+     *         cannot be converted to a local date time object.
+     */
     protected static LocalDateTime convertStringToLocalDateTime(final String s)
     {
         return LocalDateTime.parse(s, FORMATTER);
     }
 
+    /**
+     * The following method provides the repository with a means to update
+     * the controlled fields of a domain object.  These controlled fields are
+     * fields contained within the database that are managed by the database
+     * for which we do not have public setters exposed within the domain object
+     * API.
+     *
+     * @param domainObject
+     *        The {@link DomainObject} to update.  This cannot be null.
+     * @param id
+     *        The unique database identifier of the domain object.
+     * @param version
+     *        The current database version of the domain object.
+     * @param createdOn
+     *        The time that the domain object was created within the database.
+     *        This cannot be null.
+     * @param updatedOn
+     *        The last time that the domain object was updated within the
+     *        database.  This cannot be null.
+     */
     protected static void updateControlledFields(
         final DomainObject domainObject,
-        final Long id,
+        final long id,
         final long version,
         final LocalDateTime createdOn,
         final LocalDateTime updatedOn)
@@ -98,7 +144,7 @@ public abstract class Repository
     }
 
     /**
-     * Executes the supplied stored procedures in FIFO order within the same
+     * Executes the supplied stored procedures in FIFO order on the same
      * database transaction.
      *
      * @param executables
@@ -333,6 +379,8 @@ public abstract class Repository
     // The logger instance used by this class.  This cannot be null.
     private static final Logger LOGGER = new Logger(Repository.class);
 
+    // The following date time formatter is used to convert timestamp strings
+    // returned from the database into its LocalDateTime object representation.
     private static final DateTimeFormatter FORMATTER
         = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS Z");
 

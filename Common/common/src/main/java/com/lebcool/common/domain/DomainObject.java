@@ -14,24 +14,39 @@ public abstract class DomainObject
 
     /**
      * @return The unique database identifier assigned to this domain object
-     *         when it was persisted or null if this domain object has not been
-     *         persisted yet.
+     *         when it was persisted to the database or null if this domain
+     *         object has not been persisted yet.  The underlying database is
+     *         responsible for setting this value.
      */
     public Long getId()
     {
         return _id;
     }
 
+    /**
+     * @return A version number used for concurrency control.  This value is
+     *         maintained by the underlying database.
+     */
     public long getVersion()
     {
         return _version;
     }
 
+    /**
+     * @return The time, as a {@link LocalDateTime} object, of when this
+     *         domain object was persisted to the database.  This cannot be
+     *         null and it is maintained by the underlying database.
+     */
     public LocalDateTime getCreatedOn()
     {
         return _createdOn;
     }
 
+    /**
+     * @return The time, as a {@link LocalDateTime} object, of when this
+     *         domain object was last updated within the database.  This
+     *         cannot be null and it is maintained by the underlying database.
+     */
     public LocalDateTime getUpdatedOn()
     {
         return _updatedOn;
@@ -64,8 +79,26 @@ public abstract class DomainObject
      */
     protected abstract String getMembersAsKeyValueString();
 
+    /**
+     * The following method exposes a restricted means for the children of this
+     * class to update the id, version, createdOn, and updatedOn fields.  Since
+     * these fields are controlled by the database itself, we do not want to
+     * expose public setters in the API.  We expect load and refresh
+     * operations to call this method.
+     *
+     * @param id
+     *        The unique database identifier.
+     * @param version
+     *        The current version of the domain object within the database.
+     * @param createdOn
+     *        The time that this domain object was saved to the database.  This
+     *        cannot be null.
+     * @param updatedOn
+     *        The last time this domain object was updated within the database.
+     *        This cannot be null.
+     */
     protected void updateControlledFields(
-        final Long id,
+        final long id,
         final long version,
         final LocalDateTime createdOn,
         final LocalDateTime updatedOn)
@@ -76,7 +109,6 @@ public abstract class DomainObject
         _updatedOn = updatedOn;
     }
 
-
     //:: ---------------------------------------------------------------------
     //:: Private Data Members
 
@@ -85,9 +117,16 @@ public abstract class DomainObject
     // null IFF it was not persisted yet.
     private Long _id;
 
+    // A version number used by the database to control concurrent writes
+    // to the record representing this domain object.  This value is controlled
+    // and maintained by the database.
     private long _version;
 
+    // The time that this domain object was originally saved to the database.
+    // This cannot be null.
     private LocalDateTime _createdOn;
 
+    // The time of the last update made to this domain object within the
+    // database.  This cannot be null.
     private LocalDateTime _updatedOn;
 }

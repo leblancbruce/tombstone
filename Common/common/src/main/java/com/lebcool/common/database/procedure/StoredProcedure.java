@@ -83,10 +83,10 @@ public final class StoredProcedure
      *         Thrown if there's an issue executing this stored procedure.
      */
     public final void execute(
-            final Connection connection,
-            final StoredProcedureArguments arguments,
-            final ResultSetProcessor resultSetProcessor)
-                    throws SQLException
+        final Connection connection,
+        final StoredProcedureArguments arguments,
+         final ResultSetProcessor resultSetProcessor)
+             throws SQLException
     {
         LOGGER.debug(this, "Attempting to execute this stored procedure "
             + "using arguments={} and resultSetProcessor={}.",
