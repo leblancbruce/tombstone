@@ -1,0 +1,9 @@
+This folder contains the tombstone specific tomcat server configuration based
+on instructions obtained from http://tomcat.apache.org/tomcat-7.0-doc/jndi-datasource-examples-howto.html
+
+
+1. Copy the folders contained within this folder into the root folder
+   of your tomcat installation.
+2. Edit the <tomcat_home>\conf\context.xml
+   a. Locate the <Resource> with name="jdbc/tombstone" contained within it
+   b. Change the database username and password, if needed.
