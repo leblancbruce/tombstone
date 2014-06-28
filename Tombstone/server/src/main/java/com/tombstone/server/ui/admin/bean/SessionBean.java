@@ -6,7 +6,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import com.lebcool.common.logging.Logger;
 import com.tombstone.server.bean.ApplicationBean;
 import com.tombstone.server.domain.ApplicationUser;
 
@@ -49,8 +48,6 @@ public final class SessionBean implements Serializable
 
     //:: ---------------------------------------------------------------------
     //:: Private Constants
-
-    private static final Logger LOGGER = new Logger(SessionBean.class);
 
     private static final long serialVersionUID = 1L;
 }

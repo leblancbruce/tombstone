@@ -9,7 +9,7 @@ final class Page
 
     static final String INCORRECT_LOGIN_PAGE = "incorrectLogin";
 
-    static final String HOME_PAGE = "home";
+    static final String CEMETERIES_PAGE = "cemeteries";
 
     static final String DEFAULT_ERROR_PAGE = "defaultError";
 

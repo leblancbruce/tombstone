@@ -1,7 +1,7 @@
 package com.tombstone.server.ui.admin.bean;
 
 import static com.tombstone.server.ui.admin.bean.Page.DEFAULT_ERROR_PAGE;
-import static com.tombstone.server.ui.admin.bean.Page.HOME_PAGE;
+import static com.tombstone.server.ui.admin.bean.Page.CEMETERIES_PAGE;
 import static com.tombstone.server.ui.admin.bean.Page.INCORRECT_LOGIN_PAGE;
 
 import java.io.Serializable;
@@ -73,7 +73,7 @@ public final class LoginBean implements Serializable
             {
                 _sessionBean.setLoggedInUser(applicationUser);
 
-                return HOME_PAGE;
+                return CEMETERIES_PAGE;
             }
 
             return INCORRECT_LOGIN_PAGE;

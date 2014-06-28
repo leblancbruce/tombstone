@@ -66,28 +66,31 @@ public final class CemeterySummaryRepository extends Repository
             LOGGER.debug(this, "Unmarshalling the row results into an "
                     + "{} object.", CemeterySummary.class.getName());
 
-            final long cemeteryId = resultSet.getLong(1);
-            final String name = resultSet.getString(2);
-            final Short establishedYear = resultSet.getShort(3);
-            final CemeteryStatus cemeteryStatus
-                = CemeteryStatus.valueOf(resultSet.getString(4));
-            final long numberOfPlots = resultSet.getLong(5);
-            final long numberOfDeceased = resultSet.getLong(6);
-            final LocalDateTime lastUpdatedByDateTime
-                = convertStringToLocalDateTime(resultSet.getString(7));
-            final String lastUpdatedByUserName = resultSet.getString(8);
+            while(resultSet.next())
+            {
+                final long cemeteryId = resultSet.getLong(1);
+                final String name = resultSet.getString(2);
+                final Short establishedYear = resultSet.getShort(3);
+                final CemeteryStatus cemeteryStatus
+                    = CemeteryStatus.valueOf(resultSet.getString(4));
+                final long numberOfPlots = resultSet.getLong(5);
+                final long numberOfDeceased = resultSet.getLong(6);
+                final LocalDateTime lastUpdatedByDateTime
+                    = convertStringToLocalDateTime(resultSet.getString(7));
+                final String lastUpdatedByUserName = resultSet.getString(8);
 
-            final CemeterySummary cemeterySummary = new CemeterySummary(
-                cemeteryId,
-                name,
-                establishedYear,
-                cemeteryStatus,
-                numberOfPlots,
-                numberOfDeceased,
-                lastUpdatedByDateTime,
-                lastUpdatedByUserName);
+                final CemeterySummary cemeterySummary = new CemeterySummary(
+                    cemeteryId,
+                    name,
+                    establishedYear,
+                    cemeteryStatus,
+                    numberOfPlots,
+                    numberOfDeceased,
+                    lastUpdatedByDateTime,
+                    lastUpdatedByUserName);
 
-            _cemeterySummaries.add(cemeterySummary);
+                _cemeterySummaries.add(cemeterySummary);
+            }
         }
 
         public Set<CemeterySummary> getCemeterySummaries()
