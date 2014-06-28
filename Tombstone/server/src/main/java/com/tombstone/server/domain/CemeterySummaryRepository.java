@@ -1,4 +1,4 @@
-package com.tombstone.server.repository;
+package com.tombstone.server.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,18 +6,24 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.joda.time.LocalDateTime;
 
 import com.lebcool.common.database.procedure.ResultSetProcessor;
 import com.lebcool.common.database.procedure.StoredProcedure;
 import com.lebcool.common.database.procedure.StoredProcedureArguments;
+import com.lebcool.common.domain.Repository;
 import com.lebcool.common.logging.Logger;
-import com.tombstone.server.domain.CemeteryStatus;
-import com.tombstone.server.domain.CemeterySummary;
-import com.tombstone.server.repository.exception.LoadException;
+import com.tombstone.server.domain.exception.LoadException;
 
-public final class CemeterySummaryRepository extends ServerRepository
+public final class CemeterySummaryRepository extends Repository
 {
+    public CemeterySummaryRepository(final DataSource dataSource)
+    {
+        super(dataSource);
+    }
+
     public Set<CemeterySummary> load(final int page, final int count)
         throws LoadException
     {

@@ -1,11 +1,11 @@
-package com.tombstone.server.repository.exception;
+package com.tombstone.server.domain.exception;
 
-public final class SaveException extends Exception
+public final class LoadException extends Exception
 {
     //:: ---------------------------------------------------------------------
     //:: Public Construction
 
-    public SaveException(final String message, final Throwable e)
+    public LoadException(final String message, final Throwable e)
     {
         super(message, e);
     }

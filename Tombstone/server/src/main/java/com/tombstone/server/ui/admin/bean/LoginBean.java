@@ -7,13 +7,15 @@ import static com.tombstone.server.ui.admin.bean.Page.INCORRECT_LOGIN_PAGE;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.lebcool.common.logging.Logger;
+import com.tombstone.server.bean.ApplicationBean;
 import com.tombstone.server.domain.ApplicationUser;
-import com.tombstone.server.repository.ApplicationUserRepository;
-import com.tombstone.server.repository.exception.LoadException;
-import com.tombstone.server.repository.exception.RepositoryInstantiationException;
+import com.tombstone.server.domain.ApplicationUserRepository;
+import com.tombstone.server.domain.exception.LoadException;
+import com.tombstone.server.domain.exception.RepositoryInstantiationException;
 
 @ManagedBean
 @RequestScoped
@@ -42,6 +44,16 @@ public final class LoginBean implements Serializable
         _password = password;
     }
 
+    public void setApplicationBean(final ApplicationBean applicationBean)
+    {
+        _applicationBean = applicationBean;
+    }
+
+    public void setSessionBean(final SessionBean sessionBean)
+    {
+        _sessionBean = sessionBean;
+    }
+
     public String login()
     {
         LOGGER.info(this, "Attempting to authenticate the user.");
@@ -49,7 +61,8 @@ public final class LoginBean implements Serializable
         try
         {
             final ApplicationUserRepository repository
-                = new ApplicationUserRepository();
+                = new ApplicationUserRepository(
+                    _applicationBean.getDataSource());
 
             final ApplicationUser applicationUser
                 = repository.loadByUsername(_userName);
@@ -58,6 +71,8 @@ public final class LoginBean implements Serializable
                 && applicationUser.isActive()
                 && applicationUser.getPassword().equals(_password))
             {
+                _sessionBean.setLoggedInUser(applicationUser);
+
                 return HOME_PAGE;
             }
 
@@ -84,12 +99,19 @@ public final class LoginBean implements Serializable
             + "userName=\"" + _userName + "\""
             + " password=\"******\"]";
     }
+
     //:: ---------------------------------------------------------------------
     //:: Private Data Members
 
     private String _userName;
 
     private String _password;
+
+    @ManagedProperty(name="applicationBean", value="#{applicationBean}")
+    private ApplicationBean _applicationBean;
+
+    @ManagedProperty(name="sessionBean", value="#{sessionBean}")
+    private SessionBean _sessionBean;
 
     //:: ---------------------------------------------------------------------
     //:: Private Constants

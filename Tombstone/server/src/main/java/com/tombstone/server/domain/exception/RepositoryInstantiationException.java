@@ -1,4 +1,4 @@
-package com.tombstone.server.repository.exception;
+package com.tombstone.server.domain.exception;
 
 
 public final class RepositoryInstantiationException extends RuntimeException

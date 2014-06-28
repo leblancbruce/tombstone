@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.lebcool.common.database.procedure.StoredProcedureArguments.StoredProcedureArgument;
+import com.lebcool.common.domain.Repository;
 import com.lebcool.common.logging.Logger;
-import com.lebcool.common.repository.Repository;
 
 /**
  * <p>

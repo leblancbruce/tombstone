@@ -22,19 +22,9 @@ public abstract class DomainObject
         return _id;
     }
 
-    public void setId(final long id)
-    {
-        _id = id;
-    }
-
     public long getVersion()
     {
         return _version;
-    }
-
-    public void setVersion(final long version)
-    {
-        _version = version;
     }
 
     public LocalDateTime getCreatedOn()
@@ -42,19 +32,9 @@ public abstract class DomainObject
         return _createdOn;
     }
 
-    public void setCreatedOn(final LocalDateTime createdOn)
-    {
-        _createdOn = createdOn;
-    }
-
     public LocalDateTime getUpdatedOn()
     {
         return _updatedOn;
-    }
-
-    public void setUpdatedOn(final LocalDateTime updatedOn)
-    {
-        _updatedOn = updatedOn;
     }
 
     /**
@@ -83,6 +63,19 @@ public abstract class DomainObject
      *         {@link #toString()} method.
      */
     protected abstract String getMembersAsKeyValueString();
+
+    protected void updateControlledFields(
+        final Long id,
+        final long version,
+        final LocalDateTime createdOn,
+        final LocalDateTime updatedOn)
+    {
+        _id = id;
+        _version = version;
+        _createdOn = createdOn;
+        _updatedOn = updatedOn;
+    }
+
 
     //:: ---------------------------------------------------------------------
     //:: Private Data Members

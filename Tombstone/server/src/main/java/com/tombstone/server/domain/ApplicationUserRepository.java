@@ -1,4 +1,4 @@
-package com.tombstone.server.repository;
+package com.tombstone.server.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,22 +6,26 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.joda.time.LocalDateTime;
+
 import com.lebcool.common.database.procedure.ResultSetProcessor;
 import com.lebcool.common.database.procedure.StoredProcedure;
 import com.lebcool.common.database.procedure.StoredProcedureArguments;
+import com.lebcool.common.domain.Repository;
 import com.lebcool.common.logging.Logger;
-import com.tombstone.server.domain.ApplicationUser;
-import com.tombstone.server.repository.exception.LoadException;
-import com.tombstone.server.repository.exception.SaveException;
+import com.tombstone.server.domain.exception.LoadException;
+import com.tombstone.server.domain.exception.SaveException;
 
-public final class ApplicationUserRepository extends ServerRepository
+public final class ApplicationUserRepository extends Repository
 {
     //:: ---------------------------------------------------------------------
     //:: Public Construction
 
-    public ApplicationUserRepository()
+    public ApplicationUserRepository(final DataSource dataSource)
     {
-        super();
+        super(dataSource);
     }
 
     //:: ---------------------------------------------------------------------
@@ -200,12 +204,16 @@ public final class ApplicationUserRepository extends ServerRepository
             LOGGER.debug(this, "Unmarshalling the row results into an "
                 + "{} object.", ApplicationUser.class.getName());
 
-            applicationUser.setId(resultSet.getLong(1));
-            applicationUser.setVersion(resultSet.getLong(2));
-            applicationUser.setCreatedOn(
-                convertStringToLocalDateTime(resultSet.getString(3)));
-            applicationUser.setUpdatedOn(
-                convertStringToLocalDateTime(resultSet.getString(4)));
+            final Long id = resultSet.getLong(1);
+            final long version = resultSet.getLong(2);
+            final LocalDateTime createdOn
+                = convertStringToLocalDateTime(resultSet.getString(3));
+            final LocalDateTime updatedOn
+                = convertStringToLocalDateTime(resultSet.getString(4));
+
+            updateControlledFields(
+                applicationUser, id, version, createdOn, updatedOn);
+
             applicationUser.setFirstName(resultSet.getNString(5));
             applicationUser.setLastName(resultSet.getNString(6));
             applicationUser.setUserName(resultSet.getNString(7));

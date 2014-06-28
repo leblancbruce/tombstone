@@ -1,4 +1,4 @@
-package com.lebcool.common.repository;
+package com.lebcool.common.domain;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.lebcool.common.database.procedure.ResultSetProcessor;
 import com.lebcool.common.database.procedure.StoredProcedure;
@@ -50,6 +54,21 @@ public abstract class Repository
 
     //:: ---------------------------------------------------------------------
     //:: Protected Interface
+
+    protected static LocalDateTime convertStringToLocalDateTime(final String s)
+    {
+        return LocalDateTime.parse(s, FORMATTER);
+    }
+
+    protected static void updateControlledFields(
+        final DomainObject domainObject,
+        final Long id,
+        final long version,
+        final LocalDateTime createdOn,
+        final LocalDateTime updatedOn)
+    {
+        domainObject.updateControlledFields(id, version, createdOn, updatedOn);
+    }
 
     /**
      * Executes a single stored procedure.
@@ -313,4 +332,8 @@ public abstract class Repository
 
     // The logger instance used by this class.  This cannot be null.
     private static final Logger LOGGER = new Logger(Repository.class);
+
+    private static final DateTimeFormatter FORMATTER
+        = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS Z");
+
 }

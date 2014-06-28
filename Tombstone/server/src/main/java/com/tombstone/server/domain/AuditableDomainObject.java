@@ -1,6 +1,9 @@
 package com.tombstone.server.domain;
 
+import org.joda.time.LocalDateTime;
+
 import com.lebcool.common.domain.DomainObject;
+
 
 public abstract class AuditableDomainObject extends DomainObject
 {
@@ -12,20 +15,26 @@ public abstract class AuditableDomainObject extends DomainObject
         return _createdByApplicationUserId;
     }
 
-    public void setCreatedByApplicationUserId(
-        final long createdByApplicationUserId)
-    {
-        _createdByApplicationUserId = createdByApplicationUserId;
-    }
-
     public long getUpdatedByApplicationUserId()
     {
         return _updatedByApplicationUserId;
     }
 
-    public void setUpdatedByApplicationUserId(
+    //:: ---------------------------------------------------------------------
+    //:: Package-Private Interface
+
+    protected void updateControlledFields(
+        final AuditableDomainObject auditableDomainObject,
+        final Long id,
+        final long version,
+        final LocalDateTime createdOn,
+        final LocalDateTime updatedOn,
+        final long createdByApplicationUserId,
         final long updatedByApplicationUserId)
     {
+        super.updateControlledFields(id, version, createdOn, updatedOn);
+
+        _createdByApplicationUserId = createdByApplicationUserId;
         _updatedByApplicationUserId = updatedByApplicationUserId;
     }
 

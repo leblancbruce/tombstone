@@ -269,6 +269,10 @@ AS
      END
 GO
 
+CREATE PROCEDURE getCemeterySummaries
+    @start INT,
+	@count INT
+AS
   SELECT
     c.id,
 	c.name,

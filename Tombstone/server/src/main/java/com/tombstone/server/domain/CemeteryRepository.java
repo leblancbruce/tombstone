@@ -1,4 +1,4 @@
-package com.tombstone.server.repository;
+package com.tombstone.server.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,25 +6,27 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.joda.time.LocalDateTime;
+
 import com.lebcool.common.database.procedure.ResultSetProcessor;
 import com.lebcool.common.database.procedure.StoredProcedure;
 import com.lebcool.common.database.procedure.StoredProcedureArguments;
 import com.lebcool.common.logging.Logger;
-import com.tombstone.server.domain.ApplicationUser;
-import com.tombstone.server.domain.Cemetery;
-import com.tombstone.server.domain.CemeteryStatus;
-import com.tombstone.server.domain.County;
-import com.tombstone.server.repository.exception.LoadException;
-import com.tombstone.server.repository.exception.SaveException;
+import com.tombstone.server.domain.exception.LoadException;
+import com.tombstone.server.domain.exception.SaveException;
 
 public final class CemeteryRepository extends AutitableRepository
 {
     //:: ---------------------------------------------------------------------
     //:: Public Construction
 
-    public CemeteryRepository(final ApplicationUser loggedInUser)
+    public CemeteryRepository(
+        final DataSource dataSource,
+        final ApplicationUser loggedInUser)
     {
-        super(loggedInUser);
+        super(dataSource, loggedInUser);
     }
 
     //:: ---------------------------------------------------------------------
@@ -171,14 +173,24 @@ public final class CemeteryRepository extends AutitableRepository
             LOGGER.debug(this, "Unmarshalling the row results into an "
                 + "{} object.", Cemetery.class.getName());
 
-            cemetery.setId(resultSet.getLong(1));
-            cemetery.setVersion(resultSet.getLong(2));
-            cemetery.setCreatedByApplicationUserId(resultSet.getLong(3));
-            cemetery.setCreatedOn(
-                convertStringToLocalDateTime(resultSet.getString(4)));
-            cemetery.setUpdatedByApplicationUserId(resultSet.getLong(5));
-            cemetery.setUpdatedOn(
-                convertStringToLocalDateTime(resultSet.getString(6)));
+            final Long id = resultSet.getLong(1);
+            final long version = resultSet.getLong(2);
+            final long createdByApplicationUserId = resultSet.getLong(3);
+            final LocalDateTime createdOn
+                = convertStringToLocalDateTime(resultSet.getString(4));
+            final long updatedByApplicationUserId = resultSet.getLong(5);
+            final LocalDateTime updatedOn
+                = convertStringToLocalDateTime(resultSet.getString(6));
+
+            updateControlledFields(
+                cemetery,
+                id,
+                version,
+                createdOn,
+                updatedOn,
+                createdByApplicationUserId,
+                updatedByApplicationUserId);
+
             cemetery.setName(resultSet.getNString(7));
             cemetery.setAddress(resultSet.getNString(8));
             cemetery.setCity(resultSet.getNString(9));
