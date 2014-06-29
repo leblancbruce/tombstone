@@ -133,7 +133,7 @@ public abstract class DomainObject implements Serializable
     private LocalDateTime _updatedOn;
 
     //:: ---------------------------------------------------------------------
-    //:: Private Data Members
+    //:: Private Constants
 
     // The following is needed by the serializable contract.
     private static final long serialVersionUID = 1L;

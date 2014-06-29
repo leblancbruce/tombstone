@@ -7,29 +7,6 @@ import org.joda.time.LocalDateTime;
 public final class CemeterySummary implements Serializable
 {
     //:: ---------------------------------------------------------------------
-    //:: Public Construction
-
-    public CemeterySummary(
-        final long cemeteryId,
-        final String name,
-        final short establishedYear,
-        final CemeteryStatus cemeteryStatus,
-        final long numberOfPlots,
-        final long numberOfDeceased,
-        final LocalDateTime lastUpdatedDateTime,
-        final String lastUpdatedByUserName)
-    {
-        _cemeteryId = cemeteryId;
-        _name = name;
-        _establishedYear = establishedYear;
-        _cemeteryStatus = cemeteryStatus;
-        _numberOfPlots = numberOfPlots;
-        _numberOfDeceased = numberOfDeceased;
-        _lastUpdatedDateTime = lastUpdatedDateTime;
-        _lastUpdatedByUserName = lastUpdatedByUserName;
-    }
-
-    //:: ---------------------------------------------------------------------
     //:: Public Interface
 
     public long getCemeteryId()
@@ -73,6 +50,29 @@ public final class CemeterySummary implements Serializable
     }
 
     //:: ---------------------------------------------------------------------
+    //:: Package-Private Construction
+
+    CemeterySummary(
+        final long cemeteryId,
+        final String name,
+        final short establishedYear,
+        final CemeteryStatus cemeteryStatus,
+        final long numberOfPlots,
+        final long numberOfDeceased,
+        final LocalDateTime lastUpdatedDateTime,
+        final String lastUpdatedByUserName)
+    {
+        _cemeteryId = cemeteryId;
+        _name = name;
+        _establishedYear = establishedYear;
+        _cemeteryStatus = cemeteryStatus;
+        _numberOfPlots = numberOfPlots;
+        _numberOfDeceased = numberOfDeceased;
+        _lastUpdatedDateTime = lastUpdatedDateTime;
+        _lastUpdatedByUserName = lastUpdatedByUserName;
+    }
+
+    //:: ---------------------------------------------------------------------
     //:: Private Data Members
 
     private final long _cemeteryId;
@@ -92,7 +92,7 @@ public final class CemeterySummary implements Serializable
     private final String _lastUpdatedByUserName;
 
     //:: ---------------------------------------------------------------------
-    //:: Private Data Members
+    //:: Private Constants
 
     // The following is needed by the serializable contract.
     private static final long serialVersionUID = 1L;

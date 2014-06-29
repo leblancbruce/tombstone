@@ -106,7 +106,7 @@ public final class Person extends AuditableDomainObject
     private long _plotId;
 
     //:: ---------------------------------------------------------------------
-    //:: Private Data Members
+    //:: Private Constants
 
     // The following is needed by the serializable contract.
     private static final long serialVersionUID = 1L;

@@ -139,6 +139,20 @@ AS
   EXEC getApplicationUserById @id;
 GO
 
+CREATE PROCEDURE getApplicationUserSummaries
+    @start INT,
+	@count INT
+AS
+  SELECT
+    au.id,
+	au.firstname,
+	au.lastname
+  FROM
+    application_user au
+  ORDER BY 
+    au.id;
+GO
+
 -- #######################################################################
 -- # cemetery                                                            #
 -- #######################################################################

@@ -122,7 +122,7 @@ public final class Cemetery extends AuditableDomainObject
     private County _county;
 
     //:: ---------------------------------------------------------------------
-    //:: Private Data Members
+    //:: Private Constants
 
     // The following is needed by the serializable contract.
     private static final long serialVersionUID = 1L;

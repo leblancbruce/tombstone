@@ -57,7 +57,7 @@ public final class Plot extends AuditableDomainObject
     private PlotType _plotType;
 
     //:: ---------------------------------------------------------------------
-    //:: Private Data Members
+    //:: Private Constants
 
     // The following is needed by the serializable contract.
     private static final long serialVersionUID = 1L;
