@@ -82,4 +82,10 @@ public final class ApplicationUser extends DomainObject
     private String _password;
 
     private boolean _active;
+
+    //:: ---------------------------------------------------------------------
+    //:: Private Data Members
+
+    // The following is needed by the serializable contract.
+    private static final long serialVersionUID = 1L;
 }

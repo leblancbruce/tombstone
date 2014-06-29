@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets">
   <h:head>
@@ -14,18 +15,22 @@
     <![endif]-->
   </h:head>
   <h:body>
-      <section id="header">
-          <h1>Tombstone</h1>
-      </section>
-          <ul>
-              <li>Cemeteries</li>
-              <li>Users</li>
-          </ul>
-      <section id="content">
-          <ui:insert name="content" />
-      </section>
-      <section id="footer">
-          Copyright 2014
-      </section>
+    <f:metadata>
+      <f:event type="preRenderView" listener="#{sessionBean.reDirectIfNotAuthenticated}"/>
+    </f:metadata>
+    <f:phaseListener type="com.tombstone.server.ui.admin.listener.AuthenticationPhaseListener"/>
+    <section id="header">
+      <h1>Tombstone</h1>
+    </section>
+    <ul>
+      <li>Cemeteries</li>
+      <li>Users</li>
+    </ul>
+    <section id="content">
+      <ui:insert name="content" />
+    </section>
+    <section id="footer">
+      Copyright 2014
+    </section>
   </h:body>
 </html>

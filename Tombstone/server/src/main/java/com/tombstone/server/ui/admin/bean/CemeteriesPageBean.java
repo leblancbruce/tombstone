@@ -1,7 +1,6 @@
 package com.tombstone.server.ui.admin.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -16,8 +15,11 @@ import com.tombstone.server.domain.exception.LoadException;
 
 @ManagedBean
 @RequestScoped
-public final class CemeteryBean implements Serializable
+public final class CemeteriesPageBean implements Serializable
 {
+    //:: ---------------------------------------------------------------------
+    //:: Public Interface
+
     public void setApplicationBean(final ApplicationBean applicationBean)
     {
         _applicationBean = applicationBean;
@@ -33,11 +35,17 @@ public final class CemeteryBean implements Serializable
         final CemeterySummaryRepository repository
              = new CemeterySummaryRepository(_applicationBean.getDataSource());
 
-        return new ArrayList<>(repository.load(1, 1));
+        return repository.load(1, 1);
     }
+
+    //:: ---------------------------------------------------------------------
+    //:: Private Data Members
 
     @ManagedProperty(name="applicationBean", value="#{applicationBean}")
     private ApplicationBean _applicationBean;
+
+    //:: ---------------------------------------------------------------------
+    //:: Private Constants
 
     private static final long serialVersionUID = 1L;
 }

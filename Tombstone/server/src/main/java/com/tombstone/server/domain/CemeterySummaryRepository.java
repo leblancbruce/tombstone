@@ -2,9 +2,9 @@ package com.tombstone.server.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -24,7 +24,7 @@ public final class CemeterySummaryRepository extends Repository
         super(dataSource);
     }
 
-    public Set<CemeterySummary> load(final int page, final int count)
+    public List<CemeterySummary> load(final int page, final int count)
         throws LoadException
     {
         final StoredProcedure procedure
@@ -93,13 +93,13 @@ public final class CemeterySummaryRepository extends Repository
             }
         }
 
-        public Set<CemeterySummary> getCemeterySummaries()
+        public List<CemeterySummary> getCemeterySummaries()
         {
-            return Collections.unmodifiableSet(_cemeterySummaries);
+            return Collections.unmodifiableList(_cemeterySummaries);
         }
 
-        private final Set<CemeterySummary> _cemeterySummaries
-            = new HashSet<>();
+        private final List<CemeterySummary> _cemeterySummaries
+            = new ArrayList<>();
 
         private static final Logger LOGGER
             = new Logger(CemeterySummaryResultSetProcessor.class);

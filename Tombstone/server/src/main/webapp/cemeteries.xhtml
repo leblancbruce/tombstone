@@ -4,12 +4,12 @@
   xmlns:ui="http://java.sun.com/jsf/facelets">
   <ui:define name="content">
     <ul>
-      <ui:repeat value="#{cemeteryBean.counties}" var="county">
+      <ui:repeat value="#{cemeteriesPageBean.counties}" var="county">
         <li><h:outputText value="#{county}" /></li>
       </ui:repeat>
     </ul>
     <ul>
-      <ui:repeat value="#{cemeteryBean.cemeterySummaries}" var="summary">
+      <ui:repeat value="#{cemeteriesPageBean.cemeterySummaries}" var="summary">
         <li><h:outputText value="#{summary.name}" /></li>
       </ui:repeat>
     </ul>

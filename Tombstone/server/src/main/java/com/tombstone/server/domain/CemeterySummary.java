@@ -1,8 +1,10 @@
 package com.tombstone.server.domain;
 
+import java.io.Serializable;
+
 import org.joda.time.LocalDateTime;
 
-public final class CemeterySummary
+public final class CemeterySummary implements Serializable
 {
     //:: ---------------------------------------------------------------------
     //:: Public Construction
@@ -88,4 +90,10 @@ public final class CemeterySummary
     private final LocalDateTime _lastUpdatedDateTime;
 
     private final String _lastUpdatedByUserName;
+
+    //:: ---------------------------------------------------------------------
+    //:: Private Data Members
+
+    // The following is needed by the serializable contract.
+    private static final long serialVersionUID = 1L;
 }

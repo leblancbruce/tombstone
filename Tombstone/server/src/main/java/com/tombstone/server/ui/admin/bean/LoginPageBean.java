@@ -1,7 +1,7 @@
 package com.tombstone.server.ui.admin.bean;
 
-import static com.tombstone.server.ui.admin.bean.Page.DEFAULT_ERROR_PAGE;
 import static com.tombstone.server.ui.admin.bean.Page.CEMETERIES_PAGE;
+import static com.tombstone.server.ui.admin.bean.Page.DEFAULT_ERROR_PAGE;
 import static com.tombstone.server.ui.admin.bean.Page.INCORRECT_LOGIN_PAGE;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import com.tombstone.server.domain.exception.RepositoryInstantiationException;
 
 @ManagedBean
 @RequestScoped
-public final class LoginBean implements Serializable
+public final class LoginPageBean implements Serializable
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface
@@ -56,7 +56,8 @@ public final class LoginBean implements Serializable
 
     public String login()
     {
-        LOGGER.info(this, "Attempting to authenticate the user.");
+        LOGGER.info(this, "Attempting to authenticate the user with "
+            + "username=\"{}\"", _userName);
 
         try
         {
@@ -73,8 +74,15 @@ public final class LoginBean implements Serializable
             {
                 _sessionBean.setLoggedInUser(applicationUser);
 
+                LOGGER.info(this, "Successfully authenticated user={}.  "
+                    + "Re-direting to the cemeteries page.", applicationUser);
+
                 return CEMETERIES_PAGE;
             }
+
+            LOGGER.warn(this, "Unable to authenticate the user with "
+                + "username=\"{}\".  Re-directing the user to the incorrect "
+                + "login page.", _userName);
 
             return INCORRECT_LOGIN_PAGE;
         }
@@ -116,7 +124,7 @@ public final class LoginBean implements Serializable
     //:: ---------------------------------------------------------------------
     //:: Private Constants
 
-    private static final Logger LOGGER = new Logger(LoginBean.class);
+    private static final Logger LOGGER = new Logger(LoginPageBean.class);
 
     private static final long serialVersionUID = 1L;
 }

@@ -1,5 +1,7 @@
 package com.lebcool.common.domain;
 
+import java.io.Serializable;
+
 import org.joda.time.LocalDateTime;
 
 /**
@@ -7,7 +9,7 @@ import org.joda.time.LocalDateTime;
  * The base domain object class that all domain objects should inherit from.
  * </p>
  */
-public abstract class DomainObject
+public abstract class DomainObject implements Serializable
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface
@@ -129,4 +131,10 @@ public abstract class DomainObject
     // The time of the last update made to this domain object within the
     // database.  This cannot be null.
     private LocalDateTime _updatedOn;
+
+    //:: ---------------------------------------------------------------------
+    //:: Private Data Members
+
+    // The following is needed by the serializable contract.
+    private static final long serialVersionUID = 1L;
 }

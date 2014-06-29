@@ -104,4 +104,10 @@ public final class Person extends AuditableDomainObject
     private long _cemeteryId;
 
     private long _plotId;
+
+    //:: ---------------------------------------------------------------------
+    //:: Private Data Members
+
+    // The following is needed by the serializable contract.
+    private static final long serialVersionUID = 1L;
 }

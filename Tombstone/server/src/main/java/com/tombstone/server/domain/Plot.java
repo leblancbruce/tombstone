@@ -55,4 +55,10 @@ public final class Plot extends AuditableDomainObject
     private long _cemeteryId;
 
     private PlotType _plotType;
+
+    //:: ---------------------------------------------------------------------
+    //:: Private Data Members
+
+    // The following is needed by the serializable contract.
+    private static final long serialVersionUID = 1L;
 }

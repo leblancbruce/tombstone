@@ -44,4 +44,10 @@ public abstract class AuditableDomainObject extends DomainObject
     private Long _createdByApplicationUserId;
 
     private Long _updatedByApplicationUserId;
+
+    //:: ---------------------------------------------------------------------
+    //:: Private Data Members
+
+    // The following is needed by the serializable contract.
+    private static final long serialVersionUID = 1L;
 }
