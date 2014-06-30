@@ -6,13 +6,11 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.lebcool.common.logging.Logger;
-import com.tombstone.server.bean.ApplicationBean;
 import com.tombstone.server.domain.ApplicationUser;
 
 @ManagedBean
@@ -30,11 +28,6 @@ public final class SessionBean implements Serializable
     public void setLoggedInUser(final ApplicationUser loggedInUser)
     {
         _loggedInUser = loggedInUser;
-    }
-
-    public void setApplicationBean(final ApplicationBean applicationBean)
-    {
-        _applicationBean = applicationBean;
     }
 
     public void reDirectIfNotAuthenticated() throws IOException
@@ -91,9 +84,6 @@ public final class SessionBean implements Serializable
     //:: Private Data Members
 
     private ApplicationUser _loggedInUser;
-
-    @ManagedProperty(name="applicationBean", value="#{applicationBean}")
-    private ApplicationBean _applicationBean;
 
     //:: ---------------------------------------------------------------------
     //:: Private Constants

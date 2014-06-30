@@ -14,4 +14,10 @@
       <var>messages</var>
     </resource-bundle>
   </application>
+  
+  <factory>
+    <exception-handler-factory>
+       com.tombstone.server.exception.handler.TombstoneExceptionHandlerFactory
+    </exception-handler-factory>
+  </factory>
 </faces-config>
