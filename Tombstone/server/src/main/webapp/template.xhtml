@@ -4,7 +4,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets">
   <h:head>
-    <title>Tombstone</title>
+    <title><h:outputText value="#{messages['application.name']}" /></title>
     <meta charset="utf-8" />
     <link href="style/reset.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="style/master.css" rel="stylesheet" type="text/css" media="screen" />
@@ -19,17 +19,17 @@
       <f:event type="preRenderView" listener="#{sessionBean.reDirectIfNotAuthenticated}"/>
     </f:metadata>
     <section id="header">
-      <h1>Tombstone</h1>
+      <h1><h:outputText value="#{messages['application.name']}" /></h1>
     </section>
     <ul>
-      <li>Cemeteries</li>
-      <li>Users</li>
+      <li><h:outputText value="#{messages['menu.item.cemeteries']}" /></li>
+      <li><h:outputText value="#{messages['menu.item.users']}" /></li>
     </ul>
     <section id="content">
       <ui:insert name="content" />
     </section>
     <section id="footer">
-      Copyright 2014
+      <h:outputText value="#{messages['footer.copyright']}" />
     </section>
   </h:body>
 </html>

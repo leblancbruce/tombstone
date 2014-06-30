@@ -37,4 +37,9 @@ public enum County
     VICTORIA,
 
     YARMOUTH;
+
+    public String getResourceBundleKey()
+    {
+        return "county." + name();
+    }
 }

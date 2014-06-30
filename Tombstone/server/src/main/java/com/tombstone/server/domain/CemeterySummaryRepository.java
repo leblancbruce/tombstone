@@ -98,6 +98,12 @@ public final class CemeterySummaryRepository extends Repository
             return Collections.unmodifiableList(_cemeterySummaries);
         }
 
+        @Override
+        public String toString()
+        {
+            return getClass().getName();
+        }
+
         private final List<CemeterySummary> _cemeterySummaries
             = new ArrayList<>();
 

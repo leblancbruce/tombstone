@@ -5,7 +5,7 @@
   <ui:define name="content">
     <ul>
       <ui:repeat value="#{cemeteriesPageBean.counties}" var="county">
-        <li><h:outputText value="#{county}" /></li>
+        <li><h:outputText value="#{messages[county.resourceBundleKey]}" /></li>
       </ui:repeat>
     </ul>
     <ul>

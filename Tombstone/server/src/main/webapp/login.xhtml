@@ -3,13 +3,16 @@
 <html lang="en"
      xmlns="http://www.w3.org/1999/xhtml"
      xmlns:h="http://java.sun.com/jsf/html">
+  <h:head>
+    <title><h:outputText value="#{messages['application.name']}" /></title>
+  </h:head>
   <h:form>
     <h:panelGrid columns="2">
-      <h:outputText value="Username"></h:outputText>
+      <h:outputText value="#{messages['login.page.username']}" />
       <h:inputText value="#{loginPageBean.userName}"></h:inputText>
-      <h:outputText value="Password"></h:outputText>
+      <h:outputText value="#{messages['login.page.password']}" />
       <h:inputSecret value="#{loginPageBean.password}"></h:inputSecret>
     </h:panelGrid>
-    <h:commandButton value="Login" action="#{loginPageBean.login}"></h:commandButton>
+    <h:commandButton value="#{messages['login.page.login']}" action="#{loginPageBean.login}"></h:commandButton>
   </h:form>
 </html>
