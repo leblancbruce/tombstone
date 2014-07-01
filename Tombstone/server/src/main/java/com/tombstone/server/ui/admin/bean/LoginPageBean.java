@@ -1,7 +1,7 @@
 package com.tombstone.server.ui.admin.bean;
 
 import static com.tombstone.server.ui.admin.bean.Page.CEMETERIES_PAGE;
-import static com.tombstone.server.ui.admin.bean.Page.DEFAULT_ERROR_PAGE;
+import static com.tombstone.server.ui.admin.bean.Page.ERROR_PAGE;
 import static com.tombstone.server.ui.admin.bean.Page.INCORRECT_LOGIN_PAGE;
 
 import java.io.Serializable;
@@ -97,7 +97,7 @@ public final class LoginPageBean implements Serializable
                 + "database for the supplied username.", e);
         }
 
-        return DEFAULT_ERROR_PAGE;
+        return ERROR_PAGE;
     }
 
     @Override

@@ -27,10 +27,7 @@ public final class CemeteriesPageBean implements Serializable
 
     public County[] getCounties()
     {
-
-        throw new RuntimeException("Boo-yah!!!!!!!!!!!!!!!!!");
-
-//        return County.values();
+        return County.values();
     }
 
     public List<CemeterySummary> getCemeterySummaries() throws LoadException

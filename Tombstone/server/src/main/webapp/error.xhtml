@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html lang="en"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets">
+     <h:head>
+       <title><h:outputText value="#{messages['application.name']}" /></title>
+     </h:head>
+     <h:body>
+       <h:form>
+         <div>
+          <h:outputText value="#{messages['error.page.message']}" />
+         </div>
+         <div>
+           <ul>
+             <ui:repeat value="#{errorPageBean.printableExceptions}" var="printableException">
+               <li><h:outputText value="#{printableException.exceptionMessage}" /></li>
+               <ul>
+                 <ui:repeat value="#{printableException.causeMessages}" var="causeMessage">
+                   <li><h:outputText value="#{messages['error.page.caused.by']}" /> <h:outputText value="#{causeMessage}" /></li>
+                 </ui:repeat>
+               </ul>
+             </ui:repeat>
+           </ul>
+         </div>
+      </h:form>  
+    </h:body> 
+  </html>

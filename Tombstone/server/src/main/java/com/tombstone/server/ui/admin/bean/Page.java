@@ -11,7 +11,7 @@ public final class Page
 
     public static final String CEMETERIES_PAGE = "cemeteries";
 
-    public static final String DEFAULT_ERROR_PAGE = "defaultError";
+    public static final String ERROR_PAGE = "error";
 
     public static final String NOT_LOGGED_IN_PAGE = "notLoggedIn";
 
