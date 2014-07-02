@@ -22,17 +22,12 @@
 .login
 {
   font-family: 'Raleway', sans-serif;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
-  border-style: solid;
-  border-color: #3C6275;
   color: #3C6275;
   height: 300px;
   width: 500px;
   position: absolute;
   top: 50%;
   left: 35%;
-  border-width: 5px;
 }
 
 .button
