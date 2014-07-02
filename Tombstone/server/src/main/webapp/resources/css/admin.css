@@ -1,0 +1,67 @@
+.banner
+{
+  font-family: 'Raleway', sans-serif;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  background-position:center top;
+  background-color: #3C6275;
+  color: white;
+  background-size: auto 100%;
+  background-position: left;
+  display: block;
+  height: 100px;
+  padding-left: 50px;
+  padding-top: 5px;
+}
+
+.banner h1
+{
+  font-size: 50px;
+}
+
+.login
+{
+  font-family: 'Raleway', sans-serif;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: #3C6275;
+  color: #3C6275;
+  height: 300px;
+  width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  border-width: 5px;
+}
+
+.button
+{
+  border:0;
+  font-family: 'Raleway', sans-serif;
+  -moz-border-radius: 15px;
+  border-radius: 5px;
+  color: white;
+  background-color: #B13A39;
+  height: 40px;
+}
+
+.textInputLabel
+{
+  font-size: 25px;
+  font-family: 'Raleway', sans-serif;
+  font-weight:bold;
+  color: #3C6275;
+  width: 200px;
+}
+
+.textInput
+{
+  font-size: 25px;
+  font-family: 'Raleway', sans-serif;
+  -moz-border-radius: 15px;
+  border-radius: 5px;
+  color: #3C6275;
+  height: 27px;
+  width: 200px;
+}

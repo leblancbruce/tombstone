@@ -77,55 +77,58 @@ public final class TombstoneExceptionHandlerFactory
 
              final boolean exceptionOccurred = iterator.hasNext();
 
-             while(iterator.hasNext())
+             try
              {
-                 final ExceptionQueuedEvent event = iterator.next();
-
-                 final ExceptionQueuedEventContext eventContext
-                     = event.getContext();
-
-                 exceptions.add(eventContext.getException());
-
-                 iterator.remove();
-             }
-
-             if(exceptionOccurred)
-             {
-                 LOGGER.info(this, "Uncaught exceptions were "
-                     + "thrown.  Attempting to display the default error "
-                     + "page to the user.");
-
-                 final FacesContext facesContext
-                     = FacesContext.getCurrentInstance();
-
-                 final ExternalContext externalContext
-                     = facesContext.getExternalContext();
-
-                 final Application application = facesContext.getApplication();
-
-                 try
+                 while(iterator.hasNext())
                  {
+                     final ExceptionQueuedEvent event = iterator.next();
+
+                     final ExceptionQueuedEventContext eventContext
+                         = event.getContext();
+
+                     exceptions.add(eventContext.getException());
+
+                     iterator.remove();
+                 }
+
+                 if(exceptionOccurred)
+                 {
+                     LOGGER.info(this, "Uncaught exceptions were "
+                         + "thrown.  Attempting to display the default error "
+                         + "page to the user.");
+
+                     final FacesContext facesContext
+                         = FacesContext.getCurrentInstance();
+
+                     final ExternalContext externalContext
+                         = facesContext.getExternalContext();
+
+                     final Application application
+                         = facesContext.getApplication();
+
                      final ErrorPageBean bean
-                          = application.evaluateExpressionGet(
+                         = application.evaluateExpressionGet(
                               facesContext,
                               "#{errorPageBean}",
                               ErrorPageBean.class);
 
                      bean.setExceptions(exceptions);
 
-                     LOGGER.info(this, "" + bean);
-                     externalContext.redirect(ERROR_PAGE + ".jsf");
+                     try
+                     {
+                         externalContext.redirect(ERROR_PAGE + ".jsf");
+                     }
+                     catch(final IOException e)
+                     {
+                         LOGGER.error(this, "An exception was encountered "
+                             + "while trying to redirect to the page=\""
+                             + ERROR_PAGE + "\".", e);
+                     }
                  }
-                 catch(final IOException e)
-                 {
-                     LOGGER.error(this, "An exception was encountered while "
-                         + "trying to redirect to the page=\""
-                         + ERROR_PAGE + "\".", e);
-                 }
-                 finally
-                 {
-                     _exceptionHandler.handle();
-                 }
+             }
+             finally
+             {
+                 _exceptionHandler.handle();
              }
          }
 
