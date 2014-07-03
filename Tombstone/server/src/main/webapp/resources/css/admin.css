@@ -1,62 +1,74 @@
-.banner
+body
 {
   font-family: 'Raleway', sans-serif;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
-  background-position:center top;
+  color: #2F434B;
+}
+
+.banner
+{
+  -moz-border-radius: 5px;
+  border-radius: 5px;
   background-color: #3C6275;
   color: white;
   background-size: auto 100%;
-  background-position: left;
-  display: block;
   height: 100px;
-  padding-left: 50px;
-  padding-top: 5px;
+  margin: 10px;
 }
 
 .banner h1
 {
   font-size: 50px;
+  padding-left: 50px;
+  padding-top: 25px;
 }
 
-.login
+.divider
 {
-  font-family: 'Raleway', sans-serif;
-  color: #3C6275;
-  height: 300px;
-  width: 500px;
-  position: absolute;
-  top: 50%;
-  left: 35%;
+  border-top: 1px solid #3C6275;
+  margin: 10px;
 }
 
-.button
+.content
 {
-  border:0;
-  font-family: 'Raleway', sans-serif;
-  -moz-border-radius: 15px;
+
+}
+
+.cemeterySummary
+{
+   margin: 10px;
+   border-spacing: 10px;
+}
+
+.cemeterySummary td
+{
+  -moz-border-radius: 5px;
   border-radius: 5px;
-  color: white;
-  background-color: #B13A39;
-  height: 40px;
+  border: 1px solid #3C6275;
+  height: 100px;
+  width: 350px;
+  padding: 10px;  
 }
 
-.textInputLabel
+.cemeterySummary img
 {
-  font-size: 25px;
-  font-family: 'Raleway', sans-serif;
-  font-weight:bold;
-  color: #3C6275;
-  width: 200px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
 }
 
-.textInput
+.cemeterySummary h1
 {
-  font-size: 25px;
-  font-family: 'Raleway', sans-serif;
-  -moz-border-radius: 15px;
-  border-radius: 5px;
-  color: #3C6275;
-  height: 27px;
-  width: 200px;
+  font-size: 15px;
+  margin-top: 0px;
+}
+
+.cemeterySummary p
+{
+  font-size: 10px;
+}
+
+.cemeterySummary ul
+{
+   list-style-type: none;
+   margin: 0px;
+   padding: 0px;
 }

@@ -86,7 +86,12 @@ public final class TombstoneExceptionHandlerFactory
                      final ExceptionQueuedEventContext eventContext
                          = event.getContext();
 
-                     exceptions.add(eventContext.getException());
+                     final Throwable exception = eventContext.getException();
+
+                     LOGGER.error(this, "An unhandled exception was "
+                         + "encountered.  {}.", exception.getMessage());
+
+                     exceptions.add(exception);
 
                      iterator.remove();
                  }

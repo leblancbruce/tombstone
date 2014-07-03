@@ -1,0 +1,17 @@
+<ui:composition template="./template.xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="metadata">
+      <f:metadata>
+        <f:event type="preRenderView" listener="#{sessionBean.reDirectIfNotAuthenticated}"/>
+      </f:metadata>
+    </ui:define>
+    <ul>
+      <li><h:outputText value="#{messages['menu.item.cemeteries']}" /></li>
+      <li><h:outputText value="#{messages['menu.item.users']}" /></li>
+    </ul>
+    <ui:define name="footer">
+      <h:outputText value="#{messages['footer.copyright']}" />
+    </ui:define>
+</ui:composition>

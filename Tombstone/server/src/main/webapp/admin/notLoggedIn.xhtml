@@ -3,10 +3,8 @@
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:ui="http://java.sun.com/jsf/facelets">
   <ui:define name="content">
-    <ul>
-      <ui:repeat value="#{usersPageBean.applicationUserSummaries}" var="summary">
-        <li><h:outputText value="#{summary.firstName}" /> <h:outputText value="#{summary.lastName}" /></li>
-      </ui:repeat>
-    </ul>
+     <div>
+      <h:outputText value="#{messages['not.logged.in.page.message']}" />
+     </div>
   </ui:define>
 </ui:composition>

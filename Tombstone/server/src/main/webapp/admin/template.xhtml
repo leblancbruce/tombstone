@@ -9,6 +9,7 @@
     <link href="style/reset.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="style/master.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800,600" rel="stylesheet" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css' />
     <script type="text/javascript" src="script/jquery-2.1.1.min.js"></script>
     <!--[if IE]>
         <script src="script/html5.js"></script>
@@ -16,21 +17,17 @@
   </h:head>
   <h:body>
     <h:outputStylesheet library="css" name="admin.css"/>
-    <f:metadata>
-      <f:event type="preRenderView" listener="#{sessionBean.reDirectIfNotAuthenticated}"/>
-    </f:metadata>
-    <section id="header">
+    <div class="banner">
       <h1><h:outputText value="#{messages['application.name']}" /></h1>
+    </div>
+    <section id="metadata">
+      <ui:insert name="metadata" />
     </section>
-    <ul>
-      <li><h:outputText value="#{messages['menu.item.cemeteries']}" /></li>
-      <li><h:outputText value="#{messages['menu.item.users']}" /></li>
-    </ul>
     <section id="content">
       <ui:insert name="content" />
     </section>
     <section id="footer">
-      <h:outputText value="#{messages['footer.copyright']}" />
+      <ui:insert name="footer" />
     </section>
   </h:body>
 </html>
