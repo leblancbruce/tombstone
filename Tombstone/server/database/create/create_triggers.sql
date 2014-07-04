@@ -28,16 +28,15 @@ AS
 	  + 'END;');
 GO
 
-PRINT 'Creating the triggers on the application_user table';
+PRINT 'Creating the triggers on the image table';
+GO
+
+EXEC createUpdateTrigger 'image';
+GO
+PRINT 'Creating the triggers on the image table';
 GO
 
 EXEC createUpdateTrigger 'application_user';
-GO
-
-PRINT 'Creating the triggers on the application_user_image table';
-GO
-
-EXEC createUpdateTrigger 'application_user_image';
 GO
 
 PRINT 'Creating the triggers on the cemetery table';
@@ -46,34 +45,16 @@ GO
 EXEC createUpdateTrigger 'cemetery';
 GO
 
-PRINT 'Creating the triggers on the cemetery_image table';
-GO
-
-EXEC createUpdateTrigger 'cemetery_image';
-GO
-
 PRINT 'Creating the triggers on the plot table';
 GO
 
 EXEC createUpdateTrigger 'plot';
 GO
 
-PRINT 'Creating the triggers on the plot_image table';
-GO
-
-EXEC createUpdateTrigger 'plot_image';
-GO
-
 PRINT 'Creating the triggers on the person table';
 GO
 
 EXEC createUpdateTrigger 'person';
-GO
-
-PRINT 'Creating the triggers on the person_image table';
-GO
-
-EXEC createUpdateTrigger 'person_image';
 GO
 
 PRINT 'Creating the triggers on the next_of_kin table';

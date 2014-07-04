@@ -1,6 +1,26 @@
 USE $(database_name);
 GO
 
+PRINT 'Creating image table';
+GO
+
+CREATE TABLE image
+(
+  id BIGINT IDENTITY(1,1) PRIMARY KEY,
+  version BIGINT NOT NULL DEFAULT(0),
+  created_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
+  updated_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
+  image_uuid UNIQUEIDENTIFIER ROWGUIDCOL NOT NULL UNIQUE,
+  thumbnail VARBINARY(MAX) FILESTREAM NOT NULL,
+  image VARBINARY(MAX) FILESTREAM NOT NULL,
+  default_image TINYINT NOT NULL DEFAULT(0) CHECK(default_image = 0 OR default_image = 1),
+  application_user_id BIGINT NULL,
+  cemetery_id BIGINT NULL,
+  plot_id BIGINT NULL,
+  person_id BIGINT NULL
+);
+GO
+
 PRINT 'Creating the application_user table';
 GO
 
@@ -15,24 +35,6 @@ CREATE TABLE application_user
   username NVARCHAR(32) NOT NULL UNIQUE,
   password NVARCHAR(64) NOT NULL,
   active TINYINT NOT NULL DEFAULT(0) CHECK(active = 0 OR active = 1)
-);
-GO
-
-PRINT 'Creating the application_user_image table';
-GO
-
-CREATE TABLE application_user_image
-(
-  id BIGINT IDENTITY(1,1) PRIMARY KEY,
-  version BIGINT NOT NULL DEFAULT(0),
-  created_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
-  updated_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
-  image_uuid UNIQUEIDENTIFIER ROWGUIDCOL NOT NULL UNIQUE DEFAULT(NEWID()),
-  application_user_id BIGINT NOT NULL,
-  thumbnail VARBINARY(MAX) FILESTREAM NOT NULL,
-  image VARBINARY(MAX) FILESTREAM NOT NULL,
-  default_image TINYINT NOT NULL DEFAULT(0) CHECK(default_image = 0 OR default_image = 1),
-  publicly_visible TINYINT NOT NULL DEFAULT(0) CHECK(publicly_visible = 0 OR publicly_visible = 1)
 );
 GO
 
@@ -58,26 +60,6 @@ CREATE TABLE cemetery
 );
 GO
 
-PRINT 'Creating the cemetery_image table';
-GO
-
-CREATE TABLE cemetery_image
-(
-  id BIGINT IDENTITY(1,1) PRIMARY KEY,
-  version BIGINT NOT NULL DEFAULT(0),
-  created_by_application_user_id BIGINT NOT NULL,
-  created_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
-  updated_by_application_user_id BIGINT NOT NULL,
-  updated_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
-  image_uuid UNIQUEIDENTIFIER ROWGUIDCOL NOT NULL UNIQUE DEFAULT(NEWID()),
-  cemetery_id BIGINT NOT NULL,
-  thumbnail VARBINARY(MAX) FILESTREAM NOT NULL,
-  image VARBINARY(MAX) FILESTREAM NOT NULL,
-  default_image TINYINT NOT NULL DEFAULT(0) CHECK(default_image = 0 OR default_image = 1),
-  publicly_visible TINYINT NOT NULL DEFAULT(0) CHECK(publicly_visible = 0 OR publicly_visible = 1)
-);
-GO
-
 PRINT 'Creating the plot table';
 GO
 
@@ -92,26 +74,6 @@ CREATE TABLE plot
   updated_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
   cemetery_id BIGINT NOT NULL,
   plot_type NVARCHAR(32) NOT NULL DEFAULT('UNKNOWN')
-);
-GO
-
-PRINT 'Creating the cemetery_image table';
-GO
-
-CREATE TABLE plot_image
-(
-  id BIGINT IDENTITY(1,1) PRIMARY KEY,
-  version BIGINT NOT NULL DEFAULT(0),
-  created_by_application_user_id BIGINT NOT NULL,
-  created_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
-  updated_by_application_user_id BIGINT NOT NULL,
-  updated_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
-  image_uuid UNIQUEIDENTIFIER ROWGUIDCOL NOT NULL UNIQUE DEFAULT(NEWID()),
-  plot_id BIGINT NOT NULL,
-  thumbnail VARBINARY(MAX) FILESTREAM NOT NULL,
-  image VARBINARY(MAX) FILESTREAM NOT NULL,
-  default_image TINYINT NOT NULL DEFAULT(0) CHECK(default_image = 0 OR default_image = 1),
-  publicly_visible TINYINT NOT NULL DEFAULT(0) CHECK(publicly_visible = 0 OR publicly_visible = 1)
 );
 GO
 
@@ -143,26 +105,6 @@ CREATE TABLE person
   cemetery_id BIGINT NOT NULL,
   plot_id BIGINT NOT NULL,
   person_uuid UNIQUEIDENTIFIER ROWGUIDCOL NOT NULL UNIQUE
-);
-GO
-
-PRINT 'Creating the person_image table';
-GO
-
-CREATE TABLE person_image
-(
-  id BIGINT IDENTITY(1,1) PRIMARY KEY,
-  version BIGINT NOT NULL DEFAULT(0),
-  created_by_application_user_id BIGINT NOT NULL,
-  created_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
-  updated_by_application_user_id BIGINT NOT NULL,
-  updated_on DATETIMEOFFSET NOT NULL DEFAULT (SYSDATETIMEOFFSET()),
-  person_id BIGINT NOT NULL,
-  image_uuid UNIQUEIDENTIFIER ROWGUIDCOL NOT NULL UNIQUE DEFAULT(NEWID()),
-  thumbnail VARBINARY(MAX) FILESTREAM NOT NULL,
-  image VARBINARY(MAX) FILESTREAM NOT NULL,
-  default_image TINYINT NOT NULL DEFAULT(0) CHECK(default_image = 0 OR default_image = 1),
-  publicly_visible TINYINT NOT NULL DEFAULT(0) CHECK(publicly_visible = 0 OR publicly_visible = 1)
 );
 GO
 

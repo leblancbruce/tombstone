@@ -73,7 +73,7 @@ public final class StoredProcedureArguments
      * Adds a char argument.
      *
      * @param argument
-     *        The {@link Boolean} value to add.  This can be null.
+     *        The {@link Character} value to add.  This can be null.
      * @param sensitive
      *        A flag used to mask this value when it used within
      *        application logging event.  True, if the value should be
@@ -100,7 +100,7 @@ public final class StoredProcedureArguments
      * Adds a short argument.
      *
      * @param argument
-     *        The {@link Boolean} value to add.  This can be null.
+     *        The {@link Short} value to add.  This can be null.
      * @param sensitive
      *        A flag used to mask this value when it used within
      *        application logging event.  True, if the value should be
@@ -127,7 +127,7 @@ public final class StoredProcedureArguments
      * Adds a long argument.
      *
      * @param argument
-     *        The {@link Boolean} value to add.  This can be null.
+     *        The {@link Long} value to add.  This can be null.
      * @param sensitive
      *        A flag used to mask this value when it used within
      *        application logging event.  True, if the value should be
@@ -154,7 +154,7 @@ public final class StoredProcedureArguments
      * Adds a long argument.
      *
      * @param argument
-     *        The {@link Boolean} value to add.  This can be null.
+     *        The {@link Integer} value to add.  This can be null.
      * @param sensitive
      *        A flag used to mask this value when it used within
      *        application logging event.  True, if the value should be
@@ -181,7 +181,7 @@ public final class StoredProcedureArguments
      * Adds a string argument.
      *
      * @param argument
-     *        The {@link Boolean} value to add.  This can be null.
+     *        The {@link String} value to add.  This can be null.
      * @param sensitive
      *        A flag used to mask this value when it used within
      *        application logging event.  True, if the value should be
@@ -191,6 +191,18 @@ public final class StoredProcedureArguments
     {
         _arguments.add(new StoredProcedureArgument(
             nextIndex(), Types.NVARCHAR, argument, sensitive));
+    }
+
+    /**
+     * Adds a byte array argument.
+     *
+     * @param argument
+     *        The byte array value to add.  This can be null.
+     */
+    public void add(final byte[] argument)
+    {
+        _arguments.add(new StoredProcedureArgument(
+            nextIndex(), Types.VARBINARY, argument, true));
     }
 
     /**

@@ -5,12 +5,11 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.lebcool.common.logging.Logger;
+import com.tombstone.server.database.DataSourceLoader;
 
 /**
  * <p>
@@ -43,33 +42,18 @@ public final class ApplicationBean implements Serializable
     @PostConstruct
     public void initialize()
     {
-        // Log what we're about to attempt.
-        LOGGER.info(this, "Attempting to obtain the database datasource "
-           + "object using name=\"{}\"", DATASOURCE_JNDI_NAME);
+        LOGGER.info(this, "Attempting to initialize this bean.");
 
         try
         {
-            // Request the data source object from the container via a jndi
-            // lookup.
-            final Context initialContext = new InitialContext();
-            final Context envContext
-                = (Context)initialContext.lookup("java:comp/env");
+            _dataSource = DataSourceLoader.load();
 
-            _dataSource
-                = (DataSource)envContext.lookup(DATASOURCE_JNDI_NAME);
-
-            LOGGER.info(this, "Successfully obtained the datasource object.");
+            LOGGER.info(this, "Successfully initialized this bean.");
         }
         catch(final NamingException e)
         {
-            // Uh-oh.  There was an issue looking up the data source object
-            // within the container via jndi.  Log the error.  A method
-            // marked with the post construct annotation is not permitted
-            // to throw a checked exception.  Bundle the naming exception into
-            // a new runtime exception and throw it.
-            LOGGER.error(this, "Unable to load the database data source using "
-                + "name=\"{}\"", DATASOURCE_JNDI_NAME);
-
+            // Uh-oh. We can't load the data source object.  Throw an
+            // exception.
             throw new RuntimeException("The data source object could not "
                 + "be retrived from the container.", e);
         }
@@ -94,11 +78,6 @@ public final class ApplicationBean implements Serializable
 
     //:: ---------------------------------------------------------------------
     //:: Private Constants
-
-    // The jndi resource name associated with the datasource object managed
-    // by the container.
-    private static final String DATASOURCE_JNDI_NAME = "jdbc/tombstone";
-
     // The logger instance used to emit log statements to the application log.
     private static final Logger LOGGER = new Logger(ApplicationBean.class);
 

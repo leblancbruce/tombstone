@@ -2,9 +2,9 @@ package com.tombstone.server.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -31,7 +31,7 @@ public final class ApplicationUserRepository extends Repository
     //:: ---------------------------------------------------------------------
     //:: Public Interface
 
-    public Set<ApplicationUser> load() throws LoadException
+    public List<ApplicationUser> load() throws LoadException
     {
         final StoredProcedure procedure
             = new StoredProcedure("getAllApplicationUsers");
@@ -290,9 +290,9 @@ public final class ApplicationUserRepository extends Repository
             }
         }
 
-        public Set<ApplicationUser> getApplicationUsers()
+        public List<ApplicationUser> getApplicationUsers()
         {
-            return Collections.unmodifiableSet(_applicationUsers);
+            return Collections.unmodifiableList(_applicationUsers);
         }
 
         @Override
@@ -301,6 +301,7 @@ public final class ApplicationUserRepository extends Repository
             return getClass().getName();
         }
 
-        private final Set<ApplicationUser> _applicationUsers = new HashSet<>();
+        private final List<ApplicationUser> _applicationUsers
+            = new ArrayList<>();
     }
 }

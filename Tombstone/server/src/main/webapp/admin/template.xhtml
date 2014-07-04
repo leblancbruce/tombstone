@@ -17,17 +17,19 @@
   </h:head>
   <h:body>
     <h:outputStylesheet library="css" name="admin.css"/>
-    <div class="banner">
-      <h1><h:outputText value="#{messages['application.name']}" /></h1>
-    </div>
-    <section id="metadata">
-      <ui:insert name="metadata" />
-    </section>
-    <section id="content">
-      <ui:insert name="content" />
-    </section>
-    <section id="footer">
-      <ui:insert name="footer" />
-    </section>
+    <h:form enctype="multipart/form-data">
+      <div class="banner">
+        <h1><h:outputText value="#{messages['application.name']}" /></h1>
+      </div>
+      <section id="metadata">
+        <ui:insert name="metadata" />
+      </section>
+      <section id="content">
+        <ui:insert name="content" />
+      </section>
+      <section id="footer">
+        <ui:insert name="footer" />
+      </section>
+    </h:form>
   </h:body>
 </html>

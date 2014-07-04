@@ -24,6 +24,133 @@ BEGIN
 END;
 GO
 
+
+-- #######################################################################
+-- # image                                                               #
+-- #######################################################################
+
+PRINT 'Creating the image stored procedures'
+GO
+
+CREATE PROCEDURE getImage
+  @where_clause NVARCHAR(256)
+AS
+  SET NOCOUNT ON;
+
+  DECLARE @sql NVARCHAR(512);
+
+  SET @sql = 'SELECT
+      id,
+      version,
+      created_on,
+      updated_on,
+      thumbnail,
+      image,
+      default_image,
+      application_user_id,
+      cemetery_id,
+      plot_id,
+      person_id
+    FROM image '
+    + (SELECT dbo.createWhereClause(@where_clause))
+    + ' ORDER BY id'; 
+
+  EXEC(@sql);
+GO
+
+CREATE PROCEDURE getImageById
+  @id BIGINT
+AS
+  SET NOCOUNT ON;
+
+  DECLARE @where_clause NVARCHAR(256);
+
+  SET @where_clause = 'id = ' + CAST(@id AS NVARCHAR(32));
+
+  EXEC getImage @where_clause;
+GO
+
+CREATE PROCEDURE getImageByUuid
+  @image_uuid UNIQUEIDENTIFIER
+AS
+  SET NOCOUNT ON;
+
+  DECLARE @where_clause NVARCHAR(256);
+
+  SET @where_clause = 'image_uuid = ''' + convert(NVARCHAR(36), @image_uuid) + '''';
+
+  EXEC getImage @where_clause;
+GO
+
+CREATE PROCEDURE getImagesByApplicationId
+  @application_user_id BIGINT
+AS
+  SET NOCOUNT ON;
+
+  DECLARE @where_clause NVARCHAR(256);
+
+  SET @where_clause = 'application_user_id = ' + CAST(@application_user_id AS NVARCHAR(32));
+
+  EXEC getImage @where_clause;
+GO
+
+CREATE PROCEDURE saveImage
+  @id BIGINT,
+  @version BIGINT,
+  @thumbnail VARBINARY(MAX),
+  @image VARBINARY(MAX),
+  @default_image TINYINT,
+  @application_user_id BIGINT,
+  @cemetery_id BIGINT,
+  @plot_id BIGINT,
+  @person_id BIGINT
+AS
+  SET NOCOUNT ON;
+
+  DECLARE @image_uuid UNIQUEIDENTIFIER;
+
+  SET @image_uuid = NEWID();
+
+  IF(@id IS NULL)
+     BEGIN
+       INSERT INTO image (
+         image_uuid,
+         thumbnail,
+         image,
+         default_image,
+         application_user_id,
+         cemetery_id,
+         plot_id,
+         person_id)
+       VALUES (
+         @image_uuid,
+         @thumbnail,
+         @image,
+         @default_image,
+         @application_user_id,
+         @cemetery_id,
+         @plot_id,
+         @person_id);
+
+       EXEC getImageByUuid @image_uuid;
+     END
+  ELSE
+     BEGIN
+       UPDATE image SET
+         version=@version,
+         thumbnail=@thumbnail,
+         image=@image,
+         default_image=@default_image,
+         application_user_id=@application_user_id,
+         cemetery_id=@cemetery_id,
+         plot_id=@plot_id,
+         person_id=@person_id
+       WHERE id = @id;
+
+       EXEC getImageById @id;
+     END
+GO
+
 -- #######################################################################
 -- # application_user                                                    #
 -- #######################################################################
@@ -152,7 +279,6 @@ AS
   ORDER BY 
     au.id;
 GO
-
 -- #######################################################################
 -- # cemetery                                                            #
 -- #######################################################################
