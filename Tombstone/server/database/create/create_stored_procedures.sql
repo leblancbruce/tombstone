@@ -94,6 +94,22 @@ AS
   EXEC getImage @where_clause;
 GO
 
+CREATE PROCEDURE getImageBytesById
+  @id BIGINT
+AS
+  SET NOCOUNT ON;
+
+  SELECT image FROM image WHERE id = @id;
+GO
+
+CREATE PROCEDURE getThumbnailBytesById
+  @id BIGINT
+AS
+  SET NOCOUNT ON;
+
+  SELECT thumbnail FROM image WHERE id = @id;
+GO
+
 CREATE PROCEDURE saveImage
   @id BIGINT,
   @version BIGINT,
@@ -415,18 +431,19 @@ CREATE PROCEDURE getCemeterySummaries
 AS
   SELECT
     c.id,
-	c.name,
-	c.established_year,
-	c.cemetery_status,
-	COUNT(DISTINCT(pt.id)),
-	COUNT(DISTINCT(pr.id)),
-	c.updated_on,
-	au.username
+    c.name,
+    c.established_year,
+    c.cemetery_status,
+    COUNT(DISTINCT(pt.id)),
+    COUNT(DISTINCT(pr.id)),
+    c.updated_on,
+    au.username,
+    (SELECT i.id FROM image i WHERE default_image = 1 AND cemetery_id = c.id) as thumbnailImageId
   FROM
     cemetery c
-	LEFT JOIN plot pt ON c.id = pt.cemetery_id
-	LEFT JOIN person pr ON c.id = pr.cemetery_id
-	LEFT JOIN application_user au ON c.updated_by_application_user_id = au.id
+    LEFT JOIN plot pt ON c.id = pt.cemetery_id
+    LEFT JOIN person pr ON c.id = pr.cemetery_id
+    LEFT JOIN application_user au ON c.updated_by_application_user_id = au.id
   GROUP BY
     c.id,
     c.name,

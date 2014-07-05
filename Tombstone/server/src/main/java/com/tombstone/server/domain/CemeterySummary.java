@@ -49,6 +49,27 @@ public final class CemeterySummary implements Serializable
         return _lastUpdatedByUserName;
     }
 
+    public Long getThumbnailImageId()
+    {
+        return _thumbnailImageId;
+    }
+
+    @Override
+    public String toString()
+    {
+        return getClass().getName() + "["
+            + "cemeteryId=" + _cemeteryId
+            + " name=\"" + _name + "\""
+            + " establishedYear=" + _establishedYear
+            + " cemeteryStatus=" + _cemeteryStatus
+            + " numberOfPlots=" + _numberOfPlots
+            + " numberOfDeceased=" + _numberOfDeceased
+            + " lastUpdatedDateTime=" + _lastUpdatedDateTime
+            + " lastUpdatedByUserName=" + _lastUpdatedByUserName
+            + " thumbnailImageId=" + _thumbnailImageId
+            + "]";
+    }
+
     //:: ---------------------------------------------------------------------
     //:: Package-Private Construction
 
@@ -60,7 +81,8 @@ public final class CemeterySummary implements Serializable
         final long numberOfPlots,
         final long numberOfDeceased,
         final LocalDateTime lastUpdatedDateTime,
-        final String lastUpdatedByUserName)
+        final String lastUpdatedByUserName,
+        final Long thumbnailImageId)
     {
         _cemeteryId = cemeteryId;
         _name = name;
@@ -70,6 +92,7 @@ public final class CemeterySummary implements Serializable
         _numberOfDeceased = numberOfDeceased;
         _lastUpdatedDateTime = lastUpdatedDateTime;
         _lastUpdatedByUserName = lastUpdatedByUserName;
+        _thumbnailImageId = thumbnailImageId;
     }
 
     //:: ---------------------------------------------------------------------
@@ -90,6 +113,8 @@ public final class CemeterySummary implements Serializable
     private final LocalDateTime _lastUpdatedDateTime;
 
     private final String _lastUpdatedByUserName;
+
+    private final Long _thumbnailImageId;
 
     //:: ---------------------------------------------------------------------
     //:: Private Constants

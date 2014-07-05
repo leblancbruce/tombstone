@@ -12,7 +12,7 @@ public final class DataSourceLoader
     //:: ---------------------------------------------------------------------
     //:: Public Interface
 
-    public static synchronized DataSource load() throws NamingException
+    public static DataSource load() throws NamingException
     {
         // Log what we're about to attempt.
         LOGGER.info(DataSourceLoader.class.getName(),

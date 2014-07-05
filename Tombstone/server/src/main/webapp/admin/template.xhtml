@@ -18,12 +18,12 @@
   <h:body>
     <h:outputStylesheet library="css" name="admin.css"/>
     <h:form enctype="multipart/form-data">
-      <div class="banner">
-        <h1><h:outputText value="#{messages['application.name']}" /></h1>
-      </div>
       <section id="metadata">
         <ui:insert name="metadata" />
       </section>
+      <header>
+        <h1><h:outputText value="#{messages['application.name']}" /></h1>
+      </header>
       <section id="content">
         <ui:insert name="content" />
       </section>

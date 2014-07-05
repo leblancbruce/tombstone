@@ -79,6 +79,11 @@ public final class CemeterySummaryRepository extends Repository
                     = convertStringToLocalDateTime(resultSet.getString(7));
                 final String lastUpdatedByUserName = resultSet.getString(8);
 
+                Long thumbnailImageId = resultSet.getLong(9);
+
+                thumbnailImageId = resultSet.wasNull()
+                    ? null : thumbnailImageId;
+
                 final CemeterySummary cemeterySummary = new CemeterySummary(
                     cemeteryId,
                     name,
@@ -87,7 +92,8 @@ public final class CemeterySummaryRepository extends Repository
                     numberOfPlots,
                     numberOfDeceased,
                     lastUpdatedByDateTime,
-                    lastUpdatedByUserName);
+                    lastUpdatedByUserName,
+                    thumbnailImageId);
 
                 _cemeterySummaries.add(cemeterySummary);
             }

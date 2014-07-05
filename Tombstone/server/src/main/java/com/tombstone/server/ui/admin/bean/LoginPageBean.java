@@ -1,6 +1,6 @@
 package com.tombstone.server.ui.admin.bean;
 
-import static com.tombstone.server.ui.admin.bean.Page.CEMETERIES_PAGE;
+import static com.tombstone.server.ui.admin.bean.Page.CEMETERY_SUMMARIES_PAGE;
 import static com.tombstone.server.ui.admin.bean.Page.ERROR_PAGE;
 import static com.tombstone.server.ui.admin.bean.Page.INCORRECT_LOGIN_PAGE;
 
@@ -77,7 +77,7 @@ public final class LoginPageBean implements Serializable
                 LOGGER.info(this, "Successfully authenticated user={}.  "
                     + "Re-direting to the cemeteries page.", applicationUser);
 
-                return CEMETERIES_PAGE;
+                return CEMETERY_SUMMARIES_PAGE;
             }
 
             LOGGER.warn(this, "Unable to authenticate the user with "

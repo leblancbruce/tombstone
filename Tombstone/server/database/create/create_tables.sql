@@ -1,7 +1,7 @@
 USE $(database_name);
 GO
 
-PRINT 'Creating image table';
+PRINT 'Creating the image table';
 GO
 
 CREATE TABLE image

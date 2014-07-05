@@ -11,12 +11,11 @@ import javax.ws.rs.core.Response.Status;
 
 import com.lebcool.common.logging.Logger;
 import com.tombstone.server.database.DataSourceLoader;
-import com.tombstone.server.domain.Image;
 import com.tombstone.server.domain.ImageRepository;
 import com.tombstone.server.domain.exception.LoadException;
 import com.tombstone.server.rest.exception.EndPointInstantiationException;
 
-@Path("/image")
+@Path("/getImage")
 public final class GetImageEndPoint
 {
     //:: ---------------------------------------------------------------------
@@ -30,7 +29,7 @@ public final class GetImageEndPoint
         {
             _dataSource = DataSourceLoader.load();
 
-            LOGGER.info(this, "Successfully constructed this end point.");
+            LOGGER.info(this, "Successfully instantiated this end point.");
         }
         catch(final NamingException e)
         {
@@ -44,32 +43,30 @@ public final class GetImageEndPoint
     //:: Public Interface
 
     @GET
-    @Path("/user/{id}")
-    @Produces("image/jpeg")
-    public Response getApplicationUserImage(@PathParam("id") final long id)
+    @Path("/image/{id}")
+    @Produces(JPG_MEDIA_TYPE)
+    public Response getImage(@PathParam("id") final long id)
     {
-        LOGGER.debug(this, "Attempting to get the application user image "
-            + "using id=" + id);
+        LOGGER.debug(this, "Attempting to get the image using id={}.", id);
 
         final ImageRepository repository = new ImageRepository(_dataSource);
 
         try
         {
-            final Image image = repository.loadById(id);
+            final byte[] imageBytes = repository.loadImageBytesById(id);
 
-            if(image != null)
+            if(imageBytes != null)
             {
-                LOGGER.debug(this, "Found the application user image "
-                   + "using id=" + id + ".  Returning it.");
+                LOGGER.debug(this, "Found the image using id={}.  "
+                    + "Returning it.", id);
 
                 return Response
                     .status(Status.OK)
-                    .entity(image.getImage())
+                    .entity(imageBytes)
                     .build();
             }
 
-            LOGGER.debug(this, "No application user image found "
-                + "using id=" + id + ".");
+            LOGGER.warn(this, "No image found using id={}.", id);
         }
         catch(final LoadException e)
         {
@@ -83,27 +80,41 @@ public final class GetImageEndPoint
     }
 
     @GET
-    @Path("/cemetery/{id}")
-    @Produces("image/jpeg")
-    public Response getCemeteryImage(@PathParam("id") final long id)
+    @Path("/thumbnail/{id}")
+    @Produces(JPG_MEDIA_TYPE)
+    public Response getThumbnailImage(@PathParam("id") final long id)
     {
-        return Response.status(Status.NOT_FOUND).build();
-    }
+        LOGGER.debug(this, "Attempting to get the thumbnail image using id={}.",
+           id);
 
-    @GET
-    @Path("/plot/{id}")
-    @Produces("image/jpeg")
-    public Response getPlotImage(@PathParam("id") final long id)
-    {
-        return Response.status(Status.NOT_FOUND).build();
-    }
+        final ImageRepository repository = new ImageRepository(_dataSource);
 
-    @GET
-    @Path("/person/{id}")
-    @Produces("image/jpeg")
-    public Response getPersonImage()
-    {
-        return Response.status(Status.NOT_FOUND).build();
+        try
+        {
+            final byte[] imageBytes = repository.loadThumbnailBytesById(id);
+
+            if(imageBytes != null)
+            {
+                LOGGER.debug(this, "Found the thumbnail image "
+                   + "using id={}.  Returning it.", id);
+
+                return Response
+                    .status(Status.OK)
+                    .entity(imageBytes)
+                    .build();
+            }
+
+            LOGGER.warn(this, "No thumbnail image found using id={}.", id);
+        }
+        catch(final LoadException e)
+        {
+            LOGGER.error(this, "Unable to return the thumbnail image "
+                + "requested.  Returning a http status 404.", e);
+        }
+
+        return Response
+            .status(Status.NOT_FOUND)
+            .build();
     }
 
     @Override
@@ -121,4 +132,6 @@ public final class GetImageEndPoint
     //:: Private Constants
 
     private static final Logger LOGGER = new Logger(GetImageEndPoint.class);
+
+    private static final String JPG_MEDIA_TYPE = "image/jpeg";
 }

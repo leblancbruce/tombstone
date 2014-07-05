@@ -88,6 +88,62 @@ public class ImageRepository extends Repository
         }
     }
 
+    public byte[] loadImageBytesById(final long id) throws LoadException
+    {
+        final StoredProcedure procedure
+            = new StoredProcedure("getImageBytesById");
+
+        final StoredProcedureArguments arguments
+            = new StoredProcedureArguments();
+        arguments.add(id);
+
+        final ImageBytesResultSetProcessor resultSetProcessor
+            = new ImageBytesResultSetProcessor();
+
+        final Executable executable
+            = new Executable(procedure, arguments, resultSetProcessor);
+
+        try
+        {
+            execute(executable);
+
+            return resultSetProcessor.getImageBytes();
+        }
+        catch(final SQLException e)
+        {
+            throw new LoadException("Unable to load the image "
+                + "bytes using id=" + id + ".", e);
+        }
+    }
+
+    public byte[] loadThumbnailBytesById(final long id) throws LoadException
+    {
+        final StoredProcedure procedure
+            = new StoredProcedure("getThumbnailBytesById");
+
+        final StoredProcedureArguments arguments
+            = new StoredProcedureArguments();
+        arguments.add(id);
+
+        final ImageBytesResultSetProcessor resultSetProcessor
+            = new ImageBytesResultSetProcessor();
+
+        final Executable executable
+            = new Executable(procedure, arguments, resultSetProcessor);
+
+        try
+        {
+            execute(executable);
+
+            return resultSetProcessor.getImageBytes();
+        }
+        catch(final SQLException e)
+        {
+            throw new LoadException("Unable to load the thumbnail image "
+                + "bytes using id=" + id + ".", e);
+        }
+    }
+
     public void save(final Image image) throws SaveException
     {
         final StoredProcedure procedure
@@ -240,5 +296,30 @@ public class ImageRepository extends Repository
         }
 
         private final List<Image> _images = new ArrayList<>();
+    }
+
+    private static final class ImageBytesResultSetProcessor
+        implements ResultSetProcessor
+    {
+        @Override
+        public void processResultSet(
+            final ResultSet resultSet,
+            final int resultSetId)
+                throws SQLException
+        {
+            if(resultSet.next())
+            {
+                _imageBytes = resultSet.getBytes(1);
+
+                return;
+            }
+        }
+
+        public byte[] getImageBytes()
+        {
+            return _imageBytes;
+        }
+
+        private byte[] _imageBytes = null;
     }
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <ui:component>
+    <div class="cemeterySummary">
+      <h:graphicImage value="#{thumbnailImageUrl}" />
+      <div class="details">
+          <h1><h:outputText value="#{name}" /></h1>
+          <ul>
+            <li><h:outputText value="#{establishedYear}" /></li>
+            <li><h:outputText value="#{messages[cemeteryStatus.resourceBundleKey]}" /></li>
+            <li><h:outputText value="#{numberOfPlots}" /></li>
+            <li><h:outputText value="#{numberOfDeceased}" /></li>
+          </ul>
+        <p class="lastUpdated">
+          <h:outputFormat value="#{messages['cemetery.summary.updated']}">
+            <f:param value="#{lastUpdatedOnDateTime}" />
+            <f:param value="#{lastUpdatedByUserName}" />
+          </h:outputFormat>
+        </p>
+      </div>
+    </div>
+  </ui:component>
+</html>
