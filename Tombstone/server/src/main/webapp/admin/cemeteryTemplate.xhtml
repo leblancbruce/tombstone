@@ -1,0 +1,12 @@
+<ui:composition template="./secureTemplate.xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="cemeteryTabMenu">
+      <ul>
+        <li><h:commandLink action="#{cemeteryMenuBean.plotSummaries}" value="#{messages['cemetery.tab.item.plots']}" /></li>
+        <li><h:commandLink action="#{cemeteryMenuBean.details}" value="#{messages['cemetery.tab.item.details']}" /></li>
+        <li><h:commandLink action="#{cemeteryMenuBean.photos}" value="#{messages['cemetery.tab.item.photos']}" /></li>
+      </ul>
+    </ui:define>
+</ui:composition>

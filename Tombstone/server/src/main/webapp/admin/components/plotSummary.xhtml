@@ -6,27 +6,13 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
   <ui:component>
-      <div class="cemeterySummary">
+      <f:param name="param1" value="#{plotId}" />
+      <div class="plotSummary">
         <h:graphicImage value="#{thumbnailImageUrl}" />
         <div class="details">
           <h1><h:outputText value="#{name}" /></h1>
           <ul>
-            <li>
-              <c:choose>
-                <c:when test="${empty establishedYear}">
-                  <h:outputFormat value="#{messages['cemetery.summary.established.year']}">
-                    <f:param value="#{messages['cemetery.summary.established.year.unknown']}" />
-                  </h:outputFormat>
-                </c:when>
-                <c:otherwise>
-                  <h:outputFormat value="#{messages['cemetery.summary.established.year']}">
-                    <f:param value="#{establishedYear}" />
-                  </h:outputFormat>
-                </c:otherwise>
-              </c:choose>
-            </li>
-            <li><h:outputText value="#{messages[cemeteryStatus.resourceBundleKey]}" /></li>
-            <li><h:outputText value="#{numberOfPlots}" /></li>
+            <li><h:outputText value="#{messages[plotType.resourceBundleKey]}" /></li>
             <li><h:outputText value="#{numberOfDeceased}" /></li>
           </ul>
         <p class="lastUpdated">

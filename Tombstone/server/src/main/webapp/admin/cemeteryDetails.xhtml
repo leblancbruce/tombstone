@@ -1,0 +1,11 @@
+<ui:composition template="./cemeteryTemplate.xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+  <ui:define name="content">
+    <h:panelGrid columns="2">
+      <h:outputText value="#{messages['cemetery.name']}" />
+      <h:inputText value="#{cemeteryDetailsPageBean.name}"></h:inputText>
+    </h:panelGrid>
+  </ui:define>
+</ui:composition>

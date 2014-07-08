@@ -11,4 +11,9 @@ public enum PlotType
     MASS,
 
     UNMARKED;
+
+    public String getResourceBundleKey()
+    {
+        return "plot.type." + name();
+    }
 }

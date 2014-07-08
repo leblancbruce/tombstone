@@ -1,5 +1,6 @@
 <ui:composition template="./secureTemplate.xhtml"
   xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:ui="http://java.sun.com/jsf/facelets">
   <ui:define name="content">
@@ -10,16 +11,19 @@
     </ul>
     <ul>
       <ui:repeat value="#{cemeterySummariesPageBean.cemeterySummaries}" var="summary">
-        <ui:include src="./components/cemeterySummary.xhtml">
-          <ui:param name="thumbnailImageUrl" value="#{summary.thumbnailImageUrl}"/>
-          <ui:param name="name" value="#{summary.name}"/>
-          <ui:param name="establishedYear" value="#{summary.establishedYear}"/>
-          <ui:param name="cemeteryStatus" value="#{summary.cemeteryStatus}"/>
-          <ui:param name="numberOfPlots" value="#{summary.numberOfPlots}"/>
-          <ui:param name="numberOfDeceased" value="#{summary.numberOfDeceased}"/>
-          <ui:param name="lastUpdatedOnDateTime" value="#{summary.lastUpdatedOnDateTime}"/>
-          <ui:param name="lastUpdatedByUserName" value="#{summary.lastUpdatedByUserName}"/>
-        </ui:include>
+        <h:commandLink action="#{cemeterySummariesPageBean.edit}">
+          <f:param name="cemeteryId" value="#{summary.cemeteryId}" />
+          <ui:include src="./components/cemeterySummary.xhtml">
+            <ui:param name="thumbnailImageUrl" value="#{summary.thumbnailImageUrl}"/>
+            <ui:param name="name" value="#{summary.name}"/>
+            <ui:param name="establishedYear" value="#{summary.establishedYear}"/>
+            <ui:param name="cemeteryStatus" value="#{summary.cemeteryStatus}"/>
+            <ui:param name="numberOfPlots" value="#{summary.numberOfPlots}"/>
+            <ui:param name="numberOfDeceased" value="#{summary.numberOfDeceased}"/>
+            <ui:param name="lastUpdatedOnDateTime" value="#{summary.lastUpdatedOnDateTime}"/>
+            <ui:param name="lastUpdatedByUserName" value="#{summary.lastUpdatedByUserName}"/>
+          </ui:include>
+        </h:commandLink>
       </ui:repeat>
     </ul>
   </ui:define>

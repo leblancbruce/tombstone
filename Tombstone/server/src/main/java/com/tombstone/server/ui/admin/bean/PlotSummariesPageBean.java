@@ -1,6 +1,6 @@
 package com.tombstone.server.ui.admin.bean;
 
-import static com.tombstone.server.ui.admin.bean.Page.PLOT_SUMMARIES_PAGE;
+import static com.tombstone.server.ui.admin.bean.Page.PERSON_SUMMARIES_PAGE;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,15 +13,14 @@ import javax.faces.bean.RequestScoped;
 
 import com.lebcool.common.logging.Logger;
 import com.tombstone.server.bean.ApplicationBean;
-import com.tombstone.server.domain.CemeteryStatus;
-import com.tombstone.server.domain.CemeterySummary;
-import com.tombstone.server.domain.CemeterySummaryRepository;
-import com.tombstone.server.domain.County;
+import com.tombstone.server.domain.PlotSummary;
+import com.tombstone.server.domain.PlotSummaryRepository;
+import com.tombstone.server.domain.PlotType;
 import com.tombstone.server.domain.exception.LoadException;
 
 @ManagedBean
 @RequestScoped
-public final class CemeterySummariesPageBean implements Serializable
+public final class PlotSummariesPageBean implements Serializable
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface
@@ -31,21 +30,26 @@ public final class CemeterySummariesPageBean implements Serializable
         _applicationBean = applicationBean;
     }
 
-    public County[] getCounties()
+    public long getCemeteryId()
     {
-        return County.values();
+        return _cemeteryId;
     }
 
-    public List<CemeterySummaryWrapper> getCemeterySummaries() throws LoadException
+    public void setCemeteryId(final long cemeteryId)
     {
-        final List<CemeterySummaryWrapper> wrappers = new ArrayList<>();
+        _cemeteryId = cemeteryId;
+    }
 
-        final CemeterySummaryRepository repository
-             = new CemeterySummaryRepository(_applicationBean.getDataSource());
+    public List<PlotSummaryWrapper> getPlotSummaries() throws LoadException
+    {
+        final List<PlotSummaryWrapper> wrappers = new ArrayList<>();
 
-        for(final CemeterySummary summary : repository.load(1, 1))
+        final PlotSummaryRepository repository
+             = new PlotSummaryRepository(_applicationBean.getDataSource());
+
+        for(final PlotSummary summary : repository.load(_cemeteryId, 1, 1))
         {
-            wrappers.add(new CemeterySummaryWrapper(summary));
+            wrappers.add(new PlotSummaryWrapper(summary));
         }
 
         return wrappers;
@@ -53,66 +57,56 @@ public final class CemeterySummariesPageBean implements Serializable
 
     public String edit()
     {
-        LOGGER.debug(this, "Editing the cemetery");
+        LOGGER.debug(this, "Editing the plot");
 
-        return PLOT_SUMMARIES_PAGE;
+        return PERSON_SUMMARIES_PAGE;
     }
 
     //:: ---------------------------------------------------------------------
     //:: Public Nested Classes
 
-    public static final class CemeterySummaryWrapper implements Serializable
+    public static final class PlotSummaryWrapper implements Serializable
     {
-        public CemeterySummaryWrapper(final CemeterySummary cemeterySummary)
+        public PlotSummaryWrapper(final PlotSummary cemeterySummary)
         {
-            _cemeterySummary = cemeterySummary;
+            _plotSummary = cemeterySummary;
         }
 
-        public long getCemeteryId()
+        public long getPlotId()
         {
-            return _cemeterySummary.getCemeteryId();
+            return _plotSummary.getPlotId();
         }
 
         public String getName()
         {
-            return _cemeterySummary.getName();
+            return _plotSummary.getName();
         }
 
-        public Short getEstablishedYear()
+        public PlotType getPlotType()
         {
-            return _cemeterySummary.getEstablishedYear();
-        }
-
-        public CemeteryStatus getCemeteryStatus()
-        {
-            return _cemeterySummary.getCemeteryStatus();
-        }
-
-        public long getNumberOfPlots()
-        {
-            return _cemeterySummary.getNumberOfPlots();
+            return _plotSummary.getPlotType();
         }
 
         public long getNumberOfDeceased()
         {
-            return _cemeterySummary.getNumberOfDeceased();
+            return _plotSummary.getNumberOfDeceased();
         }
 
         public String getLastUpdatedOnDateTime()
         {
-            return _cemeterySummary.getLastUpdatedDateTime()
+            return _plotSummary.getLastUpdatedDateTime()
                 .toString(DATE_FORMAT, new Locale("en", "CA"));
         }
 
         public String getLastUpdatedByUserName()
         {
-            return _cemeterySummary.getLastUpdatedByUserName();
+            return _plotSummary.getLastUpdatedByUserName();
         }
 
         public String getThumbnailImageUrl()
         {
             final Long thumbnailImageId
-                = _cemeterySummary.getThumbnailImageId();
+                = _plotSummary.getThumbnailImageId();
 
             if(thumbnailImageId == null)
             {
@@ -122,7 +116,7 @@ public final class CemeterySummariesPageBean implements Serializable
             return THUMBNAIL_IMAGE_URL_PREFIX + thumbnailImageId;
         }
 
-        private final CemeterySummary _cemeterySummary;
+        private final PlotSummary _plotSummary;
 
         private static final long serialVersionUID = 1L;
 
@@ -141,11 +135,14 @@ public final class CemeterySummariesPageBean implements Serializable
     @ManagedProperty(name="applicationBean", value="#{applicationBean}")
     private ApplicationBean _applicationBean;
 
+    @ManagedProperty(name="cemeteryId", value="#{param.cemeteryId}")
+    private long _cemeteryId;
+
     //:: ---------------------------------------------------------------------
     //:: Private Constants
 
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER
-        = new Logger(CemeterySummariesPageBean.class);
+        = new Logger(PlotSummariesPageBean.class);
 }

@@ -552,6 +552,35 @@ AS
      END
 GO
 
+CREATE PROCEDURE getPlotSummaries
+    @cemetery_id BIGINT,
+    @start INT,
+    @count INT
+AS
+  SELECT
+    p.id,
+    p.name,
+    p.plot_type,
+    COUNT(DISTINCT(pr.id)),
+    p.updated_on,
+    au.username,
+    (SELECT i.id FROM image i WHERE default_image = 1 AND plot_id = p.id) as thumbnailImageId
+  FROM
+    plot p
+    LEFT JOIN person pr ON p.id = pr.plot_id
+    LEFT JOIN application_user au ON p.updated_by_application_user_id = au.id
+  WHERE
+    p.cemetery_id = @cemetery_id
+  GROUP BY
+    p.id,
+    p.name,
+    p.plot_type,
+    p.updated_on,
+    au.username
+  ORDER BY 
+    p.id;
+GO
+
 -- #######################################################################
 -- # person                                                              #
 -- #######################################################################

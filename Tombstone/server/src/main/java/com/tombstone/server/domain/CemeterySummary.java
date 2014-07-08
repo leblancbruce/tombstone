@@ -76,7 +76,7 @@ public final class CemeterySummary implements Serializable
     CemeterySummary(
         final long cemeteryId,
         final String name,
-        final short establishedYear,
+        final Short establishedYear,
         final CemeteryStatus cemeteryStatus,
         final long numberOfPlots,
         final long numberOfDeceased,

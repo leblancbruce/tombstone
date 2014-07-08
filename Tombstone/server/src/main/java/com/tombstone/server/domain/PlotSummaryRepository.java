@@ -17,26 +17,30 @@ import com.lebcool.common.domain.Repository;
 import com.lebcool.common.logging.Logger;
 import com.tombstone.server.domain.exception.LoadException;
 
-public final class CemeterySummaryRepository extends Repository
+public final class PlotSummaryRepository extends Repository
 {
-    public CemeterySummaryRepository(final DataSource dataSource)
+    public PlotSummaryRepository(final DataSource dataSource)
     {
         super(dataSource);
     }
 
-    public List<CemeterySummary> load(final int page, final int count)
-        throws LoadException
+    public List<PlotSummary> load(
+        final long cemeteryId,
+        final int page,
+        final int count)
+            throws LoadException
     {
         final StoredProcedure procedure
-            = new StoredProcedure("getCemeterySummaries");
+            = new StoredProcedure("getPlotSummaries");
 
         final StoredProcedureArguments arguments
             = new StoredProcedureArguments();
+        arguments.add(cemeteryId);
         arguments.add(page);
         arguments.add(count);
 
-        final CemeterySummaryResultSetProcessor resultSetProcessor
-            = new CemeterySummaryResultSetProcessor();
+        final PlotSummaryResultSetProcessor resultSetProcessor
+            = new PlotSummaryResultSetProcessor();
 
         final Executable executable
             = new Executable(procedure, arguments, resultSetProcessor);
@@ -45,16 +49,17 @@ public final class CemeterySummaryRepository extends Repository
         {
             execute(executable);
 
-            return resultSetProcessor.getCemeterySummaries();
+            return resultSetProcessor.getPlotSummaries();
         }
         catch(final SQLException e)
         {
-            throw new LoadException("Unable to load the cemetery summaries.",
+            throw new LoadException("Unable to load the plot summaries for "
+                + " the cemetery with id=" + cemeteryId + ".",
                 e);
         }
     }
 
-    private static final class CemeterySummaryResultSetProcessor
+    private static final class PlotSummaryResultSetProcessor
         implements ResultSetProcessor
     {
         @Override
@@ -64,49 +69,40 @@ public final class CemeterySummaryRepository extends Repository
                 throws SQLException
         {
             LOGGER.debug(this, "Unmarshalling the row results into an "
-                    + "{} object.", CemeterySummary.class.getName());
+                    + "{} object.", PlotSummary.class.getName());
 
             while(resultSet.next())
             {
-                final long cemeteryId = resultSet.getLong(1);
+                final long plotId = resultSet.getLong(1);
                 final String name = resultSet.getString(2);
-
-                Short establishedYear = resultSet.getShort(3);
-
-                establishedYear
-                    = resultSet.wasNull() ? null : establishedYear;
-
-                final CemeteryStatus cemeteryStatus
-                    = CemeteryStatus.valueOf(resultSet.getString(4));
-                final long numberOfPlots = resultSet.getLong(5);
-                final long numberOfDeceased = resultSet.getLong(6);
+                final PlotType plotType
+                    = PlotType.valueOf(resultSet.getString(3));
+                final long numberOfDeceased = resultSet.getLong(4);
                 final LocalDateTime lastUpdatedByDateTime
-                    = convertStringToLocalDateTime(resultSet.getString(7));
-                final String lastUpdatedByUserName = resultSet.getString(8);
+                    = convertStringToLocalDateTime(resultSet.getString(5));
+                final String lastUpdatedByUserName = resultSet.getString(6);
 
-                Long thumbnailImageId = resultSet.getLong(9);
+                Long thumbnailImageId = resultSet.getLong(7);
 
                 thumbnailImageId = resultSet.wasNull()
                     ? null : thumbnailImageId;
 
-                final CemeterySummary cemeterySummary = new CemeterySummary(
-                    cemeteryId,
+                final PlotSummary plotSummary = new PlotSummary(
+                    plotId,
                     name,
-                    establishedYear,
-                    cemeteryStatus,
-                    numberOfPlots,
+                    plotType,
                     numberOfDeceased,
                     lastUpdatedByDateTime,
                     lastUpdatedByUserName,
                     thumbnailImageId);
 
-                _cemeterySummaries.add(cemeterySummary);
+                _plotSummaries.add(plotSummary);
             }
         }
 
-        public List<CemeterySummary> getCemeterySummaries()
+        public List<PlotSummary> getPlotSummaries()
         {
-            return Collections.unmodifiableList(_cemeterySummaries);
+            return Collections.unmodifiableList(_plotSummaries);
         }
 
         @Override
@@ -115,10 +111,9 @@ public final class CemeterySummaryRepository extends Repository
             return getClass().getName();
         }
 
-        private final List<CemeterySummary> _cemeterySummaries
-            = new ArrayList<>();
+        private final List<PlotSummary> _plotSummaries = new ArrayList<>();
 
         private static final Logger LOGGER
-            = new Logger(CemeterySummaryResultSetProcessor.class);
+            = new Logger(PlotSummaryResultSetProcessor.class);
     }
 }

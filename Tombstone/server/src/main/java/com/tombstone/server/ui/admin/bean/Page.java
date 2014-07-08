@@ -15,6 +15,14 @@ public final class Page
 
     public static final String NOT_LOGGED_IN_PAGE = "notLoggedIn";
 
+    public static final String PLOT_SUMMARIES_PAGE = "plotSummaries";
+
+    public static final String CEMETERY_DETAILS_PAGE = "cemeteryDetails";
+
+    public static final String CEMETERY_PHOTOS_PAGE = "cemeteryPhotos";
+
+    public static final String PERSON_SUMMARIES_PAGE = "personSummaries";
+
     //:: ---------------------------------------------------------------------
     //:: Private Construction
 

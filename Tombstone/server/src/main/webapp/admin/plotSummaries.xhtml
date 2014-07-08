@@ -1,0 +1,22 @@
+<ui:composition template="./cemeteryTemplate.xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+  <ui:define name="content">
+    <ul>
+      <ui:repeat value="#{plotSummariesPageBean.plotSummaries}" var="summary">
+        <h:commandLink action="#{plotSummariesPageBean.edit}">
+          <ui:include src="./components/plotSummary.xhtml">
+            <ui:param name="plotId" value="#{summary.plotId}"/>
+            <ui:param name="thumbnailImageUrl" value="#{summary.thumbnailImageUrl}"/>
+            <ui:param name="name" value="#{summary.name}"/>
+            <ui:param name="plotType" value="#{summary.plotType}"/>
+            <ui:param name="numberOfDeceased" value="#{summary.numberOfDeceased}"/>
+            <ui:param name="lastUpdatedOnDateTime" value="#{summary.lastUpdatedOnDateTime}"/>
+            <ui:param name="lastUpdatedByUserName" value="#{summary.lastUpdatedByUserName}"/>
+          </ui:include>
+        </h:commandLink>
+      </ui:repeat>
+    </ul>
+  </ui:define>
+</ui:composition>

@@ -32,7 +32,7 @@ header h1
   margin: 15px;
 }
 
-.cemeterySummary
+.cemeterySummary, .plotSummary
 {
   display: inline-block;
   margin: 15px;
@@ -46,13 +46,13 @@ header h1
   max-width: 500px;
 }
 
-.cemeterySummary:hover
+.cemeterySummary:hover, .plotSummary:hover
 {
   border-left: 7px solid #B13A39;
   background-color: #F6F6F6;
 }
 
-.cemeterySummary img
+.cemeterySummary img, .plotSummary img
 {
   display: inline-block;
   float: left;
@@ -60,14 +60,14 @@ header h1
   -moz-border-radius: 5px;
 }
 
-.cemeterySummary h1
+.cemeterySummary h1, .plotSummary h1
 {
   margin-top: 0;
   font-size: 1.2em;
   font-weight: 600;
 }
 
-.cemeterySummary ul
+.cemeterySummary ul, .plotSummary ul
 {
   margin: 0px;
   padding: 0px;
