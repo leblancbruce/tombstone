@@ -9,17 +9,17 @@
       <ul>
         <li>
            <h:commandLink action="#{cemeteryTabsBean.plotSummaries}" value="#{messages['cemetery.tab.item.plots']}">
-             <f:param name="cemeteryId" value="#{plotSummariesPageBean.cemeteryId}" />
+             <f:param name="cemeteryId" value="#{cemeteryTabsBean.cemeteryId}" />
            </h:commandLink>
         </li>
         <li>
            <h:commandLink action="#{cemeteryTabsBean.details}" value="#{messages['cemetery.tab.item.details']}">
-             <f:param name="cemeteryId" value="#{plotSummariesPageBean.cemeteryId}" />
+             <f:param name="cemeteryId" value="#{cemeteryTabsBean.cemeteryId}" />
            </h:commandLink>
         </li>
         <li>
-           <h:commandLink action="#{cemeteryTabsBean.photos}" value="#{messages['cemetery.tab.item.photos']}">
-             <f:param name="cemeteryId" value="#{plotSummariesPageBean.cemeteryId}" />
+           <h:commandLink action="#{cemeteryTabsBean.images}" value="#{messages['cemetery.tab.item.images']}">
+             <f:param name="cemeteryId" value="#{cemeteryTabsBean.cemeteryId}" />
            </h:commandLink>
         </li>
       </ul>

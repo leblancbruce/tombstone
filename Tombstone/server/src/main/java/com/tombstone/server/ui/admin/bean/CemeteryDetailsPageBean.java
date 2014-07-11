@@ -24,8 +24,6 @@ public final class CemeteryDetailsPageBean extends UIAdminBean
 
     public void setCemeteryId(final long cemeteryId)
     {
-        LOGGER.debug(this, "Setting the cemetery id to {}.", _cemeteryId);
-
         _cemeteryId = cemeteryId;
     }
 
@@ -47,12 +45,13 @@ public final class CemeteryDetailsPageBean extends UIAdminBean
             LOGGER.debug(this, "Attempting to initialize this bean using "
                 + "cemeteryId={}.", _cemeteryId);
 
-            _cemeteryRepository = new CemeteryRepository(
-                getApplicationBean().getDataSource(),
-                getSessionBean().getLoggedInUser());
+            final CemeteryRepository cemeteryRepository
+                = new CemeteryRepository(
+                   getApplicationBean().getDataSource(),
+                   getSessionBean().getLoggedInUser());
 
             final Cemetery cemetery
-                = _cemeteryRepository.loadById(_cemeteryId);
+                = cemeteryRepository.loadById(_cemeteryId);
 
             _name = cemetery.getName();
         }
@@ -68,8 +67,6 @@ public final class CemeteryDetailsPageBean extends UIAdminBean
 
     @ManagedProperty(name="cemeteryId", value="#{param.cemeteryId}")
     private long _cemeteryId;
-
-    private CemeteryRepository _cemeteryRepository;
 
     private String _name;
 

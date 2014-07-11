@@ -59,15 +59,15 @@ public class ImageRepository extends Repository
         }
     }
 
-    public List<Image> loadByApplicationId(final long applicationId)
+    public List<Image> loadByApplicationUserId(final long applicationUserId)
         throws LoadException
     {
         final StoredProcedure procedure
-            = new StoredProcedure("getImagesByApplicationId");
+            = new StoredProcedure("getImagesByApplicationUserId");
 
         final StoredProcedureArguments arguments
             = new StoredProcedureArguments();
-        arguments.add(applicationId);
+        arguments.add(applicationUserId);
 
         final MultipleImagesResultSetProcessor resultSetProcessor
             = new MultipleImagesResultSetProcessor();
@@ -84,7 +84,65 @@ public class ImageRepository extends Repository
         catch(final SQLException e)
         {
             throw new LoadException("Unable to load the images "
-                + "using applicationId=" + applicationId + ".", e);
+                + "using applicationUserId=" + applicationUserId + ".", e);
+        }
+    }
+
+    public List<Image> loadByCemeteryId(final long cemeteryId)
+        throws LoadException
+    {
+        final StoredProcedure procedure
+            = new StoredProcedure("getImagesByCemeteryId");
+
+        final StoredProcedureArguments arguments
+            = new StoredProcedureArguments();
+        arguments.add(cemeteryId);
+
+        final MultipleImagesResultSetProcessor resultSetProcessor
+            = new MultipleImagesResultSetProcessor();
+
+        final Executable executable
+            = new Executable(procedure, arguments, resultSetProcessor);
+
+        try
+        {
+            execute(executable);
+
+            return resultSetProcessor.getImages();
+        }
+        catch(final SQLException e)
+        {
+            throw new LoadException("Unable to load the images "
+                + "using cemeteryId=" + cemeteryId + ".", e);
+        }
+    }
+
+    public List<Long> loadImageIdsByCemeteryId(final long cemeteryId)
+        throws LoadException
+    {
+        final StoredProcedure procedure
+            = new StoredProcedure("getImageIdsByCemeteryId");
+
+        final StoredProcedureArguments arguments
+            = new StoredProcedureArguments();
+        arguments.add(cemeteryId);
+
+        final ImageIdsResultSetProcessor resultSetProcessor
+            = new ImageIdsResultSetProcessor();
+
+        final Executable executable
+            = new Executable(procedure, arguments, resultSetProcessor);
+
+        try
+        {
+            execute(executable);
+
+            return resultSetProcessor.getImageIds();
+        }
+        catch(final SQLException e)
+        {
+            throw new LoadException("Unable to load the image "
+                + "ids using cemeteryId=" + cemeteryId + ".", e);
         }
     }
 
@@ -141,6 +199,35 @@ public class ImageRepository extends Repository
         {
             throw new LoadException("Unable to load the thumbnail image "
                 + "bytes using id=" + id + ".", e);
+        }
+    }
+
+    public byte[] loadThumbnailBytesByCemeteryId(final long cemeteryId)
+        throws LoadException
+    {
+        final StoredProcedure procedure
+            = new StoredProcedure("getThumbnailBytesByCemeteryId");
+
+        final StoredProcedureArguments arguments
+            = new StoredProcedureArguments();
+        arguments.add(cemeteryId);
+
+        final ImageBytesResultSetProcessor resultSetProcessor
+            = new ImageBytesResultSetProcessor();
+
+        final Executable executable
+            = new Executable(procedure, arguments, resultSetProcessor);
+
+        try
+        {
+            execute(executable);
+
+            return resultSetProcessor.getImageBytes();
+        }
+        catch(final SQLException e)
+        {
+            throw new LoadException("Unable to load the thumbnail image "
+                + "bytes using cemeteryId=" + cemeteryId + ".", e);
         }
     }
 
@@ -321,5 +408,28 @@ public class ImageRepository extends Repository
         }
 
         private byte[] _imageBytes = null;
+    }
+
+    private static final class ImageIdsResultSetProcessor
+        implements ResultSetProcessor
+    {
+        @Override
+        public void processResultSet(
+            final ResultSet resultSet,
+            final int resultSetId)
+                throws SQLException
+        {
+            while(resultSet.next())
+            {
+                _imageIds.add(resultSet.getLong(1));
+            }
+        }
+
+        public List<Long> getImageIds()
+        {
+            return Collections.unmodifiableList(_imageIds);
+        }
+
+        private final List<Long> _imageIds = new ArrayList<>();
     }
 }

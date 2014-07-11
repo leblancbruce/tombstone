@@ -1,14 +1,12 @@
 package com.tombstone.server.ui.admin.bean;
 
 import static com.tombstone.server.ui.admin.bean.Page.CEMETERY_DETAILS_PAGE;
-import static com.tombstone.server.ui.admin.bean.Page.CEMETERY_PHOTOS_PAGE;
+import static com.tombstone.server.ui.admin.bean.Page.CEMETERY_IMAGES_PAGE;
 import static com.tombstone.server.ui.admin.bean.Page.PLOT_SUMMARIES_PAGE;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-
-import com.lebcool.common.logging.Logger;
 
 @ManagedBean
 @RequestScoped
@@ -24,8 +22,6 @@ public final class CemeteryTabsBean extends UIAdminBean
 
     public void setCemeteryId(final long cemeteryId)
     {
-        LOGGER.debug(this, "Setting the cemetery id to {}.", _cemeteryId);
-
         _cemeteryId = cemeteryId;
     }
 
@@ -39,9 +35,9 @@ public final class CemeteryTabsBean extends UIAdminBean
         return CEMETERY_DETAILS_PAGE;
     }
 
-    public String photos()
+    public String images()
     {
-        return CEMETERY_PHOTOS_PAGE;
+        return CEMETERY_IMAGES_PAGE;
     }
 
     //:: ---------------------------------------------------------------------
@@ -54,6 +50,4 @@ public final class CemeteryTabsBean extends UIAdminBean
     //:: Private Constants
 
     private static final long serialVersionUID = 1L;
-
-    private static final Logger LOGGER = new Logger(CemeteryTabsBean.class);
 }

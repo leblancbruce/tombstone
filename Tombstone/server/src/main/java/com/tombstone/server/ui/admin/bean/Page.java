@@ -19,7 +19,7 @@ public final class Page
 
     public static final String CEMETERY_DETAILS_PAGE = "cemeteryDetails";
 
-    public static final String CEMETERY_PHOTOS_PAGE = "cemeteryPhotos";
+    public static final String CEMETERY_IMAGES_PAGE = "cemeteryImages";
 
     public static final String PERSON_SUMMARIES_PAGE = "personSummaries";
 

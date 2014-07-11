@@ -82,7 +82,7 @@ AS
   EXEC getImage @where_clause;
 GO
 
-CREATE PROCEDURE getImagesByApplicationId
+CREATE PROCEDURE getImagesByApplicationUserId
   @application_user_id BIGINT
 AS
   SET NOCOUNT ON;
@@ -92,6 +92,26 @@ AS
   SET @where_clause = 'application_user_id = ' + CAST(@application_user_id AS NVARCHAR(32));
 
   EXEC getImage @where_clause;
+GO
+
+CREATE PROCEDURE getImagesByCemeteryId
+  @cemetery_id BIGINT
+AS
+  SET NOCOUNT ON;
+
+  DECLARE @where_clause NVARCHAR(256);
+
+  SET @where_clause = 'cemetery_id = ' + CAST(@cemetery_id AS NVARCHAR(32));
+
+  EXEC getImage @where_clause;
+GO
+
+CREATE PROCEDURE getImageIdsByCemeteryId
+  @cemetery_id BIGINT
+AS
+  SET NOCOUNT ON;
+
+  SELECT id FROM image WHERE cemetery_id = @cemetery_id;
 GO
 
 CREATE PROCEDURE getImageBytesById
