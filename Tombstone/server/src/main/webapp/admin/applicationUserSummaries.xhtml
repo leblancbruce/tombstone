@@ -1,0 +1,18 @@
+<ui:composition template="./secureTemplate.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+  <ui:define name="content">
+    <ul>
+      <ui:repeat value="#{applicationUserSummariesPageBean.applicationUserSummaries}" var="summary">
+        <h:commandLink action="#{applicationUserSummariesPageBean.edit}">
+          <ui:include src="./components/applicationUserSummary.xhtml">
+            <ui:param name="applicationUserId" value="#{summary.applicationUserId}"/>
+            <ui:param name="thumbnailImageUrl" value="#{summary.thumbnailImageUrl}"/>
+            <ui:param name="firstName" value="#{summary.firstName}"/>
+          </ui:include>
+        </h:commandLink>
+      </ui:repeat>
+    </ul>
+  </ui:define>
+</ui:composition>

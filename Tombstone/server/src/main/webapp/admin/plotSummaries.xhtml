@@ -3,6 +3,9 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets">
   <ui:define name="content">
+    <f:metadata>
+      <f:viewParam name="cemeteryId" value="#{plotSummariesPageBean.cemeteryId}"/>
+    </f:metadata>
     <ul>
       <ui:repeat value="#{plotSummariesPageBean.plotSummaries}" var="summary">
         <h:commandLink action="#{plotSummariesPageBean.edit}">

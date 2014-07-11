@@ -22,17 +22,24 @@ public final class ApplicationUserSummary implements Serializable
         return _lastName;
     }
 
+    public Long getThumbnailImageId()
+    {
+        return _thumbnailImageId;
+    }
+
     //:: ---------------------------------------------------------------------
     //:: Package-Private Construction
 
     ApplicationUserSummary(
         final long applicationUserId,
         final String firstName,
-        final String lastName)
+        final String lastName,
+        final Long thumbnailImageId)
     {
         _applicationUserId = applicationUserId;
         _firstName = firstName;
         _lastName = lastName;
+        _thumbnailImageId = thumbnailImageId;
     }
 
     //:: ---------------------------------------------------------------------
@@ -44,10 +51,11 @@ public final class ApplicationUserSummary implements Serializable
 
     private final String _lastName;
 
+    private final Long _thumbnailImageId;
+
     //:: ---------------------------------------------------------------------
     //:: Private Constants
 
     // The following is needed by the serializable contract.
     private static final long serialVersionUID = 1L;
-
 }

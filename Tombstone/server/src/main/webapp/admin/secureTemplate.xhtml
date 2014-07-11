@@ -7,10 +7,10 @@
         <f:event type="preRenderView" listener="#{sessionBean.reDirectIfNotAuthenticated}"/>
       </f:metadata>
     </ui:define>
-    <ui:define name="mainMenu">
+    <ui:define name="menu">
       <ul>
-        <li><h:outputText value="#{messages['menu.item.cemeteries']}" /></li>
-        <li><h:outputText value="#{messages['menu.item.users']}" /></li>
+        <li><h:commandLink action="#{menuBean.cemeteries}" value="#{messages['menu.item.cemeteries']}" /></li>
+        <li><h:commandLink action="#{menuBean.users}" value="#{messages['menu.item.users']}" /></li>
       </ul>
     </ui:define>
     <ui:define name="footer">

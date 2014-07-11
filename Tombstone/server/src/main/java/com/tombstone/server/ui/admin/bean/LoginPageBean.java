@@ -4,14 +4,10 @@ import static com.tombstone.server.ui.admin.bean.Page.CEMETERY_SUMMARIES_PAGE;
 import static com.tombstone.server.ui.admin.bean.Page.ERROR_PAGE;
 import static com.tombstone.server.ui.admin.bean.Page.INCORRECT_LOGIN_PAGE;
 
-import java.io.Serializable;
-
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.lebcool.common.logging.Logger;
-import com.tombstone.server.bean.ApplicationBean;
 import com.tombstone.server.domain.ApplicationUser;
 import com.tombstone.server.domain.ApplicationUserRepository;
 import com.tombstone.server.domain.exception.LoadException;
@@ -19,7 +15,7 @@ import com.tombstone.server.domain.exception.RepositoryInstantiationException;
 
 @ManagedBean
 @RequestScoped
-public final class LoginPageBean implements Serializable
+public final class LoginPageBean extends UIAdminBean
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface
@@ -44,16 +40,6 @@ public final class LoginPageBean implements Serializable
         _password = password;
     }
 
-    public void setApplicationBean(final ApplicationBean applicationBean)
-    {
-        _applicationBean = applicationBean;
-    }
-
-    public void setSessionBean(final SessionBean sessionBean)
-    {
-        _sessionBean = sessionBean;
-    }
-
     public String login()
     {
         LOGGER.info(this, "Attempting to authenticate the user with "
@@ -63,7 +49,7 @@ public final class LoginPageBean implements Serializable
         {
             final ApplicationUserRepository repository
                 = new ApplicationUserRepository(
-                    _applicationBean.getDataSource());
+                    getApplicationBean().getDataSource());
 
             final ApplicationUser applicationUser
                 = repository.loadByUsername(_userName);
@@ -72,7 +58,7 @@ public final class LoginPageBean implements Serializable
                 && applicationUser.isActive()
                 && applicationUser.getPassword().equals(_password))
             {
-                _sessionBean.setLoggedInUser(applicationUser);
+                getSessionBean().setLoggedInUser(applicationUser);
 
                 LOGGER.info(this, "Successfully authenticated user={}.  "
                     + "Re-direting to the cemeteries page.", applicationUser);
@@ -100,26 +86,12 @@ public final class LoginPageBean implements Serializable
         return ERROR_PAGE;
     }
 
-    @Override
-    public String toString()
-    {
-        return getClass().getName() + "["
-            + "userName=\"" + _userName + "\""
-            + " password=\"******\"]";
-    }
-
     //:: ---------------------------------------------------------------------
     //:: Private Data Members
 
     private String _userName;
 
     private String _password;
-
-    @ManagedProperty(name="applicationBean", value="#{applicationBean}")
-    private ApplicationBean _applicationBean;
-
-    @ManagedProperty(name="sessionBean", value="#{sessionBean}")
-    private SessionBean _sessionBean;
 
     //:: ---------------------------------------------------------------------
     //:: Private Constants

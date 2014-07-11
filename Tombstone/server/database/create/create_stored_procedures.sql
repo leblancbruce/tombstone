@@ -288,13 +288,15 @@ CREATE PROCEDURE getApplicationUserSummaries
 AS
   SELECT
     au.id,
-	au.firstname,
-	au.lastname
+    au.firstname,
+    au.lastname,
+    (SELECT i.id FROM image i WHERE default_image = 1 AND application_user_id = au.id) as thumbnailImageId
   FROM
     application_user au
   ORDER BY 
     au.id;
 GO
+
 -- #######################################################################
 -- # cemetery                                                            #
 -- #######################################################################

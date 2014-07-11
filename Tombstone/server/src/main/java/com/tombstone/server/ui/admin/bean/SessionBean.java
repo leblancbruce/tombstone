@@ -3,7 +3,6 @@ package com.tombstone.server.ui.admin.bean;
 import static com.tombstone.server.ui.admin.bean.Page.NOT_LOGGED_IN_PAGE;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -11,11 +10,12 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.lebcool.common.logging.Logger;
+import com.tombstone.server.bean.Bean;
 import com.tombstone.server.domain.ApplicationUser;
 
 @ManagedBean
 @SessionScoped
-public final class SessionBean implements Serializable
+public final class SessionBean extends Bean
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface

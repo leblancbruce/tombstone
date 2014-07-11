@@ -3,8 +3,11 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets">
   <ui:define name="content">
+    <f:metadata>
+      <f:viewParam name="cemeteryId" value="#{cemeteryDetailsPageBean.cemeteryId}"/>
+    </f:metadata>
     <h:panelGrid columns="2">
-      <h:outputText value="#{messages['cemetery.name']}" />
+      <h:outputText value="#{messages['cemetery.details.name']}" />
       <h:inputText value="#{cemeteryDetailsPageBean.name}"></h:inputText>
     </h:panelGrid>
   </ui:define>

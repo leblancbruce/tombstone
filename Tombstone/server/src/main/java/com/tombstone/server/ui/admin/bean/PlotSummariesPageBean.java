@@ -4,6 +4,7 @@ import static com.tombstone.server.ui.admin.bean.Page.PERSON_SUMMARIES_PAGE;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -12,7 +13,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.lebcool.common.logging.Logger;
-import com.tombstone.server.bean.ApplicationBean;
 import com.tombstone.server.domain.PlotSummary;
 import com.tombstone.server.domain.PlotSummaryRepository;
 import com.tombstone.server.domain.PlotType;
@@ -20,15 +20,10 @@ import com.tombstone.server.domain.exception.LoadException;
 
 @ManagedBean
 @RequestScoped
-public final class PlotSummariesPageBean implements Serializable
+public final class PlotSummariesPageBean extends UIAdminBean
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface
-
-    public void setApplicationBean(final ApplicationBean applicationBean)
-    {
-        _applicationBean = applicationBean;
-    }
 
     public long getCemeteryId()
     {
@@ -45,14 +40,16 @@ public final class PlotSummariesPageBean implements Serializable
         final List<PlotSummaryWrapper> wrappers = new ArrayList<>();
 
         final PlotSummaryRepository repository
-             = new PlotSummaryRepository(_applicationBean.getDataSource());
+             = new PlotSummaryRepository(getApplicationBean().getDataSource());
 
         for(final PlotSummary summary : repository.load(_cemeteryId, 1, 1))
         {
             wrappers.add(new PlotSummaryWrapper(summary));
         }
 
-        return wrappers;
+        LOGGER.debug(this, "Returning {} plot summaries.", wrappers.size());
+
+        return Collections.unmodifiableList(wrappers);
     }
 
     public String edit()
@@ -67,9 +64,9 @@ public final class PlotSummariesPageBean implements Serializable
 
     public static final class PlotSummaryWrapper implements Serializable
     {
-        public PlotSummaryWrapper(final PlotSummary cemeterySummary)
+        public PlotSummaryWrapper(final PlotSummary plotSummary)
         {
-            _plotSummary = cemeterySummary;
+            _plotSummary = plotSummary;
         }
 
         public long getPlotId()
@@ -131,9 +128,6 @@ public final class PlotSummariesPageBean implements Serializable
 
     //:: ---------------------------------------------------------------------
     //:: Private Data Members
-
-    @ManagedProperty(name="applicationBean", value="#{applicationBean}")
-    private ApplicationBean _applicationBean;
 
     @ManagedProperty(name="cemeteryId", value="#{param.cemeteryId}")
     private long _cemeteryId;

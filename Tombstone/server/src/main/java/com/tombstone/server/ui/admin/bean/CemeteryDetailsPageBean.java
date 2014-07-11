@@ -1,28 +1,21 @@
 package com.tombstone.server.ui.admin.bean;
 
-import java.io.Serializable;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
-import com.tombstone.server.bean.ApplicationBean;
+import com.lebcool.common.logging.Logger;
 import com.tombstone.server.domain.Cemetery;
 import com.tombstone.server.domain.CemeteryRepository;
 import com.tombstone.server.domain.exception.LoadException;
 
 @ManagedBean
 @RequestScoped
-public final class CemeteryDetailsPageBean implements Serializable
+public final class CemeteryDetailsPageBean extends UIAdminBean
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface
-
-    public void setApplicationBean(final ApplicationBean applicationBean)
-    {
-        _applicationBean = applicationBean;
-    }
 
     public long getCemeteryId()
     {
@@ -31,6 +24,8 @@ public final class CemeteryDetailsPageBean implements Serializable
 
     public void setCemeteryId(final long cemeteryId)
     {
+        LOGGER.debug(this, "Setting the cemetery id to {}.", _cemeteryId);
+
         _cemeteryId = cemeteryId;
     }
 
@@ -45,25 +40,31 @@ public final class CemeteryDetailsPageBean implements Serializable
     }
 
     @PostConstruct
-    public void loadCemetery() throws LoadException
+    public void loadCemetery()
     {
-        _cemeteryRepository = new CemeteryRepository(
-            _applicationBean.getDataSource(),
-            _sessionBean.getLoggedInUser());
+        try
+        {
+            LOGGER.debug(this, "Attempting to initialize this bean using "
+                + "cemeteryId={}.", _cemeteryId);
 
-        final Cemetery cemetery = _cemeteryRepository.loadById(_cemeteryId);
+            _cemeteryRepository = new CemeteryRepository(
+                getApplicationBean().getDataSource(),
+                getSessionBean().getLoggedInUser());
 
-        _name = cemetery.getName();
+            final Cemetery cemetery
+                = _cemeteryRepository.loadById(_cemeteryId);
+
+            _name = cemetery.getName();
+        }
+        catch(final LoadException e)
+        {
+            LOGGER.error(this, "An exception occured while initializing this "
+                + "bean.", e);
+        }
     }
 
     //:: ---------------------------------------------------------------------
     //:: Private Data Members
-
-    @ManagedProperty(name="applicationBean", value="#{applicationBean}")
-    private ApplicationBean _applicationBean;
-
-    @ManagedProperty(name="sessionBean", value="#{sessionBean}")
-    private SessionBean _sessionBean;
 
     @ManagedProperty(name="cemeteryId", value="#{param.cemeteryId}")
     private long _cemeteryId;
@@ -76,4 +77,7 @@ public final class CemeteryDetailsPageBean implements Serializable
     //:: Private Constants
 
     private static final long serialVersionUID = 1L;
+
+    private static final Logger LOGGER
+        = new Logger(CemeteryDetailsPageBean.class);
 }

@@ -1,6 +1,5 @@
 package com.tombstone.server.ui.admin.bean;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +9,7 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
-public final class ErrorPageBean implements Serializable
+public final class ErrorPageBean extends UIAdminBean
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface
@@ -36,12 +35,6 @@ public final class ErrorPageBean implements Serializable
         }
 
         return Collections.unmodifiableList(printableExceptions);
-    }
-
-    @Override
-    public String toString()
-    {
-        return getClass().getName();
     }
 
     //:: ---------------------------------------------------------------------

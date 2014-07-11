@@ -2,11 +2,26 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:define name="cemeteryTabMenu">
+    <f:metadata>
+      <f:viewParam name="cemeteryId" value="#{cemeteryTabsBean.cemeteryId}"/>
+    </f:metadata>
+    <ui:define name="tabs">
       <ul>
-        <li><h:commandLink action="#{cemeteryMenuBean.plotSummaries}" value="#{messages['cemetery.tab.item.plots']}" /></li>
-        <li><h:commandLink action="#{cemeteryMenuBean.details}" value="#{messages['cemetery.tab.item.details']}" /></li>
-        <li><h:commandLink action="#{cemeteryMenuBean.photos}" value="#{messages['cemetery.tab.item.photos']}" /></li>
+        <li>
+           <h:commandLink action="#{cemeteryTabsBean.plotSummaries}" value="#{messages['cemetery.tab.item.plots']}">
+             <f:param name="cemeteryId" value="#{plotSummariesPageBean.cemeteryId}" />
+           </h:commandLink>
+        </li>
+        <li>
+           <h:commandLink action="#{cemeteryTabsBean.details}" value="#{messages['cemetery.tab.item.details']}">
+             <f:param name="cemeteryId" value="#{plotSummariesPageBean.cemeteryId}" />
+           </h:commandLink>
+        </li>
+        <li>
+           <h:commandLink action="#{cemeteryTabsBean.photos}" value="#{messages['cemetery.tab.item.photos']}">
+             <f:param name="cemeteryId" value="#{plotSummariesPageBean.cemeteryId}" />
+           </h:commandLink>
+        </li>
       </ul>
     </ui:define>
 </ui:composition>

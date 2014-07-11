@@ -1,7 +1,5 @@
 package com.tombstone.server.bean;
 
-import java.io.Serializable;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -20,7 +18,7 @@ import com.tombstone.server.database.DataSourceLoader;
  */
 @ManagedBean
 @ApplicationScoped
-public final class ApplicationBean implements Serializable
+public final class ApplicationBean extends Bean
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface
@@ -59,16 +57,6 @@ public final class ApplicationBean implements Serializable
         }
     }
 
-    /**
-     * @return A string representation of this class used for logging
-     *         purposes.
-     */
-    @Override
-    public String toString()
-    {
-        return getClass().getName();
-    }
-
     //:: ---------------------------------------------------------------------
     //:: Private Data Members
 
@@ -78,6 +66,7 @@ public final class ApplicationBean implements Serializable
 
     //:: ---------------------------------------------------------------------
     //:: Private Constants
+
     // The logger instance used to emit log statements to the application log.
     private static final Logger LOGGER = new Logger(ApplicationBean.class);
 

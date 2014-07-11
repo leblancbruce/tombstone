@@ -3,12 +3,15 @@
   xmlns:f="http://java.sun.com/jsf/core"
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:ui="http://java.sun.com/jsf/facelets">
-  <ui:define name="content">
+  <ui:define name="filter">
     <ul>
+      <li><h:outputText value="#{messages['county.ALL']}" /></li>
       <ui:repeat value="#{cemeterySummariesPageBean.counties}" var="county">
         <li><h:outputText value="#{messages[county.resourceBundleKey]}" /></li>
       </ui:repeat>
     </ul>
+  </ui:define>
+  <ui:define name="content">
     <ul>
       <ui:repeat value="#{cemeterySummariesPageBean.cemeterySummaries}" var="summary">
         <h:commandLink action="#{cemeterySummariesPageBean.edit}">

@@ -23,6 +23,8 @@ public final class Page
 
     public static final String PERSON_SUMMARIES_PAGE = "personSummaries";
 
+    public static final String USER_SUMMARIES_PAGE = "applicationUserSummaries";
+
     //:: ---------------------------------------------------------------------
     //:: Private Construction
 

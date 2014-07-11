@@ -70,11 +70,17 @@ public final class ApplicationUserSummaryRepository extends Repository
                 final String firstName = resultSet.getString(2);
                 final String lastName = resultSet.getString(3);
 
+                Long thumbnailImageId = resultSet.getLong(4);
+
+                thumbnailImageId = resultSet.wasNull()
+                    ? null : thumbnailImageId;
+
                 final ApplicationUserSummary applicationUserSummary
                     = new ApplicationUserSummary(
                         applicationUserId,
                         firstName,
-                        lastName);
+                        lastName,
+                        thumbnailImageId);
 
                 _applicationUserSummaries.add(applicationUserSummary);
             }

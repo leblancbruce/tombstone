@@ -14,9 +14,9 @@
     <!--[if IE]>
         <script src="script/html5.js"></script>
     <![endif]-->
+    <h:outputStylesheet library="css" name="admin.css"/>
   </h:head>
   <h:body>
-    <h:outputStylesheet library="css" name="admin.css"/>
     <h:form enctype="multipart/form-data">
       <section id="metadata">
         <ui:insert name="metadata" />
@@ -24,6 +24,15 @@
       <header>
         <h1><h:outputText value="#{messages['application.name']}" /></h1>
       </header>
+      <section id="menu">
+        <ui:insert name="menu" />
+      </section>
+      <section id="filter">
+        <ui:insert name="filter" />
+      </section>
+      <section id="tabs">
+        <ui:insert name="tabs" />
+      </section>
       <section id="content">
         <ui:insert name="content" />
       </section>

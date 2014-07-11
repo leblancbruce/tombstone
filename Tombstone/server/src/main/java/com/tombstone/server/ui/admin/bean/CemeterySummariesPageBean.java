@@ -4,15 +4,14 @@ import static com.tombstone.server.ui.admin.bean.Page.PLOT_SUMMARIES_PAGE;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.lebcool.common.logging.Logger;
-import com.tombstone.server.bean.ApplicationBean;
 import com.tombstone.server.domain.CemeteryStatus;
 import com.tombstone.server.domain.CemeterySummary;
 import com.tombstone.server.domain.CemeterySummaryRepository;
@@ -21,15 +20,10 @@ import com.tombstone.server.domain.exception.LoadException;
 
 @ManagedBean
 @RequestScoped
-public final class CemeterySummariesPageBean implements Serializable
+public final class CemeterySummariesPageBean extends UIAdminBean
 {
     //:: ---------------------------------------------------------------------
     //:: Public Interface
-
-    public void setApplicationBean(final ApplicationBean applicationBean)
-    {
-        _applicationBean = applicationBean;
-    }
 
     public County[] getCounties()
     {
@@ -41,14 +35,18 @@ public final class CemeterySummariesPageBean implements Serializable
         final List<CemeterySummaryWrapper> wrappers = new ArrayList<>();
 
         final CemeterySummaryRepository repository
-             = new CemeterySummaryRepository(_applicationBean.getDataSource());
+             = new CemeterySummaryRepository(
+                 getApplicationBean().getDataSource());
 
         for(final CemeterySummary summary : repository.load(1, 1))
         {
             wrappers.add(new CemeterySummaryWrapper(summary));
         }
 
-        return wrappers;
+        LOGGER.debug(this, "Returning {} cemetery summaries.",
+            wrappers.size());
+
+        return Collections.unmodifiableList(wrappers);
     }
 
     public String edit()
@@ -134,12 +132,6 @@ public final class CemeterySummariesPageBean implements Serializable
         private static final String NO_THUMBNAIL_AVAILABLE_URL
             = "/resources/images/no-thumbnail-available.png";
     }
-
-    //:: ---------------------------------------------------------------------
-    //:: Private Data Members
-
-    @ManagedProperty(name="applicationBean", value="#{applicationBean}")
-    private ApplicationBean _applicationBean;
 
     //:: ---------------------------------------------------------------------
     //:: Private Constants
